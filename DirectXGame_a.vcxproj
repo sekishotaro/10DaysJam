@@ -226,6 +226,7 @@
     <ClCompile Include="base\DirectXCommon.cpp" />
     <ClCompile Include="Framework.cpp" />
     <ClCompile Include="Mapchip.cpp" />
+    <ClCompile Include="Player.cpp" />
     <ClCompile Include="scene\GamePlayScene.cpp" />
     <ClCompile Include="Input\Input.cpp" />
     <ClCompile Include="main.cpp" />
@@ -241,6 +242,7 @@
   <ItemGroup>
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Mapchip.h" />
+    <ClInclude Include="Player.h" />
     <ClInclude Include="scene\AbstractSceneFactory.h" />
     <ClInclude Include="Audio\Audio.h" />
     <ClInclude Include="scene\BaseScene.h" />

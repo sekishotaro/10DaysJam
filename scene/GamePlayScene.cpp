@@ -25,17 +25,17 @@ void GamePlayScene::Initialize()
 	spriteBG = Sprite::Create(1, { 0.0f,0.0f });
 
 	// オブジェクト生成
-	model = Model::LoadFromOBJ("sphere");
+	//model = Model::LoadFromOBJ("sphere");
 
-	objectX = Object3d::Create();
+	//objectX = Object3d::Create();
 
 	//オブジェクトにモデルをひも付ける
-	objectX->SetModel(model);
+	//objectX->SetModel(model);
 }
 
 void GamePlayScene::Finalize()
 {
-	delete model;
+	//delete model;
 }
 
 void GamePlayScene::Update()
@@ -45,20 +45,20 @@ void GamePlayScene::Update()
 	Input *input = Input::GetInstance();
 
 	//オブジェクト移動
-	if (input->PushKey(DIK_UP) || input->PushKey(DIK_DOWN) || input->PushKey(DIK_RIGHT) || input->PushKey(DIK_LEFT))
-	{
-		// 現在の座標を取得
-		XMFLOAT3 position = objectX->GetPosition();
+	//if (input->PushKey(DIK_UP) || input->PushKey(DIK_DOWN) || input->PushKey(DIK_RIGHT) || input->PushKey(DIK_LEFT))
+	//{
+	//	// 現在の座標を取得
+	//	XMFLOAT3 position = objectX->GetPosition();
 
-		// 移動後の座標を計算
-		if (input->PushKey(DIK_UP)) { position.y += 1.0f; }
-		else if (input->PushKey(DIK_DOWN)) { position.y -= 1.0f; }
-		if (input->PushKey(DIK_RIGHT)) { position.x += 1.0f; }
-		else if (input->PushKey(DIK_LEFT)) { position.x -= 1.0f; }
+	//	// 移動後の座標を計算
+	//	if (input->PushKey(DIK_UP)) { position.y += 1.0f; }
+	//	else if (input->PushKey(DIK_DOWN)) { position.y -= 1.0f; }
+	//	if (input->PushKey(DIK_RIGHT)) { position.x += 1.0f; }
+	//	else if (input->PushKey(DIK_LEFT)) { position.x -= 1.0f; }
 
-		// 座標の変更を反映
-		objectX->SetPosition(position);
-	}
+	//	// 座標の変更を反映
+	//	objectX->SetPosition(position);
+	//}
 
 	if (input->PushKey(DIK_W) || input->PushKey(DIK_S) || input->PushKey(DIK_D) || input->PushKey(DIK_A))
 	{
@@ -89,7 +89,7 @@ void GamePlayScene::Update()
 
 	//アップデート
 	camera->Update();
-	objectX->Update();
+	//objectX->Update();
 }
 
 void GamePlayScene::Draw()
@@ -117,7 +117,7 @@ void GamePlayScene::Draw()
 	Object3d::PreDraw(cmdList);
 
 	// 3Dオブクジェクトの描画
-	objectX->Draw();
+	//objectX->Draw();
 
 	/// <summary>
 	/// ここに3Dオブジェクトの描画処理を追加できる
