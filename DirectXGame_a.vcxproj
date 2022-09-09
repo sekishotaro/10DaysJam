@@ -226,6 +226,7 @@
     <ClCompile Include="base\DirectXCommon.cpp" />
     <ClCompile Include="Framework.cpp" />
     <ClCompile Include="Mapchip.cpp" />
+    <ClCompile Include="ResultScene.cpp" />
     <ClCompile Include="scene\GamePlayScene.cpp" />
     <ClCompile Include="Input\Input.cpp" />
     <ClCompile Include="main.cpp" />
@@ -237,10 +238,12 @@
     <ClCompile Include="2d\Sprite.cpp" />
     <ClCompile Include="scene\TitleScene.cpp" />
     <ClCompile Include="base\WinApp.cpp" />
+    <ClCompile Include="SelectScene.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Mapchip.h" />
+    <ClInclude Include="ResultScene.h" />
     <ClInclude Include="scene\AbstractSceneFactory.h" />
     <ClInclude Include="Audio\Audio.h" />
     <ClInclude Include="scene\BaseScene.h" />
@@ -260,6 +263,7 @@
     <ClInclude Include="2d\Sprite.h" />
     <ClInclude Include="scene\TitleScene.h" />
     <ClInclude Include="base\WinApp.h" />
+    <ClInclude Include="SelectScene.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
