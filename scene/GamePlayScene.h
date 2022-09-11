@@ -10,6 +10,8 @@
 #include "Mapchip.h"
 #include "Camera.h"
 
+
+
 class GamePlayScene : public BaseScene
 {
 private: // エイリアス
@@ -68,8 +70,8 @@ public:
 	/// ゲームシーン用
 	/// </summary>
 	Sprite *spriteBG = nullptr;
-	std::unique_ptr<Object3d> objectX;
-	Model *model = nullptr;
+	//std::unique_ptr<Object3d> objectX;
+	//Model *model = nullptr;
 	Camera *camera = nullptr;
 
 	// プレイヤー変数

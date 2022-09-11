@@ -5,6 +5,9 @@
 #include "DebugText.h"
 #include "DirectXCommon.h"
 
+#include "PLayer.h"
+#include "Barrel.h"
+
 void GamePlayScene::Initialize()
 {
 	Audio::GetInstance()->LoadWave("futta-dream.wav");
@@ -25,6 +28,7 @@ void GamePlayScene::Initialize()
 	spriteBG = Sprite::Create(1, { 0.0f,0.0f });
 
 	// オブジェクト生成
+<<<<<<< HEAD
 	model = Model::LoadFromOBJ("sphere");
 	block = Model::LoadFromOBJ("block");
 
@@ -47,11 +51,24 @@ void GamePlayScene::Initialize()
 			objBlock[y][x]->SetPosition({ 1000.0f,1000.0f,0.0f });
 		}
 	}
+=======
+	//model = Model::LoadFromOBJ("sphere");
+	//objectX = Object3d::Create();
+	//オブジェクトにモデルをひも付ける
+	//objectX->SetModel(model);
+
+
+	Player::Initialize();
+	Barrel::Initialize();
+	
+>>>>>>> master
 }
 
 void GamePlayScene::Finalize()
 {
-	delete model;
+	//delete model;
+	Player::Finalize();
+	Barrel::Finalize();
 }
 
 void GamePlayScene::Update()
@@ -60,6 +77,7 @@ void GamePlayScene::Update()
 	
 	Input *input = Input::GetInstance();
 
+<<<<<<< HEAD
 	// マップチップ生成
 	MapCreate(0);
 	for (int y = 0; y < map_max_y; y++)
@@ -99,6 +117,12 @@ void GamePlayScene::Update()
 	//{
 	//	// 現在の座標を取得
 	//	c_pos = camera->GetEye();
+=======
+	if (input->PushKey(DIK_W) || input->PushKey(DIK_S) || input->PushKey(DIK_D) || input->PushKey(DIK_A))
+	{
+		// 現在の座標を取得
+		XMFLOAT3 position = camera->GetEye();
+>>>>>>> master
 
 	//	// 移動後の座標を計算
 	//	if (input->PushKey(DIK_W))		{ c_pos.y += 1.0f; }
@@ -111,6 +135,7 @@ void GamePlayScene::Update()
 	DebugText::GetInstance()->Print(50, 30 * 1, 2, "%f", camera->GetEye().x);
 	DebugText::GetInstance()->Print(50, 30 * 2, 2, "%f", camera->GetEye().y);
 
+<<<<<<< HEAD
 	if (input->TriggerKey(DIK_SPACE))
 	{
 		p_pos = { map_max_x / 2 * LAND_SCALE,  -map_max_y / 2 * LAND_SCALE, 0 };
@@ -121,9 +146,14 @@ void GamePlayScene::Update()
 	camera->SetEye({ p_pos.x, p_pos.y + 3.0f, p_pos.z - 100.0f });
 	camera->SetTarget(p_pos);
 
+=======
+	Barrel::CollisionPlayer();
+>>>>>>> master
 	//アップデート
 	camera->Update();
-	objectX->Update();
+	Barrel::Update(input);
+	Player::Update(input);
+	
 }
 
 void GamePlayScene::Draw()
@@ -151,7 +181,7 @@ void GamePlayScene::Draw()
 	Object3d::PreDraw(cmdList);
 
 	// 3Dオブクジェクトの描画
-	objectX->Draw();
+	//objectX->Draw();
 
 	//マップチップの描画
 	for (int y = 0; y < map_max_y; y++)
@@ -165,6 +195,9 @@ void GamePlayScene::Draw()
 	/// <summary>
 	/// ここに3Dオブジェクトの描画処理を追加できる
 	/// </summary>
+	
+	Player::Draw();
+	Barrel::Draw();
 
 	// 3Dオブジェクト描画後処理
 	Object3d::PostDraw();

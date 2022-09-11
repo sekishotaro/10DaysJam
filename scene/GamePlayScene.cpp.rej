@@ -1,0 +1,9 @@
+diff a/scene/GamePlayScene.cpp b/scene/GamePlayScene.cpp	(rejected hunks)
+@@ -57,7 +57,6 @@
+ void GamePlayScene::Update()
+ {
+ 	// �Q�[���V�[���̖��t���[������
+-	
+ 	Input *input = Input::GetInstance();
+ 
+ 	// �}�b�v�`�b�v����
