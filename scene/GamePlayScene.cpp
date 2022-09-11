@@ -28,13 +28,7 @@ void GamePlayScene::Initialize()
 	spriteBG = Sprite::Create(1, { 0.0f,0.0f });
 
 	// オブジェクト生成
-<<<<<<< HEAD
-	model = Model::LoadFromOBJ("sphere");
 	block = Model::LoadFromOBJ("block");
-
-	objectX = Object3d::Create();
-	//オブジェクトにモデルをひも付ける
-	objectX->SetModel(model);
 
 	//マップチップ用のCSV読み込み
 	//(map, "Resource/scv/なんたら.csv")で追加可能
@@ -51,17 +45,9 @@ void GamePlayScene::Initialize()
 			objBlock[y][x]->SetPosition({ 1000.0f,1000.0f,0.0f });
 		}
 	}
-=======
-	//model = Model::LoadFromOBJ("sphere");
-	//objectX = Object3d::Create();
-	//オブジェクトにモデルをひも付ける
-	//objectX->SetModel(model);
-
 
 	Player::Initialize();
 	Barrel::Initialize();
-	
->>>>>>> master
 }
 
 void GamePlayScene::Finalize()
@@ -75,9 +61,8 @@ void GamePlayScene::Update()
 {
 	// ゲームシーンの毎フレーム処理
 	
-	Input *input = Input::GetInstance();
+	Input* input = Input::GetInstance();
 
-<<<<<<< HEAD
 	// マップチップ生成
 	MapCreate(0);
 	for (int y = 0; y < map_max_y; y++)
@@ -88,67 +73,25 @@ void GamePlayScene::Update()
 		}
 	}
 
-	//オブジェクト移動
-	if (input->PushKey(DIK_UP) || input->PushKey(DIK_DOWN) || input->PushKey(DIK_RIGHT) || input->PushKey(DIK_LEFT))
-	{
-		// 現在の座標を取得
-		p_pos = objectX->GetPosition();
 
-		// 移動後の座標を計算
-		if(input->PushKey(DIK_UP))
-		{
-			p_pos.y += 1.0f;
-		}
-		else if(input->PushKey(DIK_DOWN))
-		{
-			p_pos.y -= 1.0f;
-		}
-		if (input->PushKey(DIK_RIGHT))
-		{
-			p_pos.x += 1.0f;
-		}
-		else if (input->PushKey(DIK_LEFT))
-		{
-			p_pos.x -= 1.0f;
-		}
-	}
-
-	//if (input->PushKey(DIK_W) || input->PushKey(DIK_S) || input->PushKey(DIK_D) || input->PushKey(DIK_A))
-	//{
-	//	// 現在の座標を取得
-	//	c_pos = camera->GetEye();
-=======
 	if (input->PushKey(DIK_W) || input->PushKey(DIK_S) || input->PushKey(DIK_D) || input->PushKey(DIK_A))
 	{
 		// 現在の座標を取得
 		XMFLOAT3 position = camera->GetEye();
->>>>>>> master
 
-	//	// 移動後の座標を計算
-	//	if (input->PushKey(DIK_W))		{ c_pos.y += 1.0f; }
-	//	else if (input->PushKey(DIK_S)) { c_pos.y -= 1.0f; }
-	//	if (input->PushKey(DIK_D))		{ c_pos.x += 1.0f; }
-	//	else if (input->PushKey(DIK_A)) { c_pos.x -= 1.0f; }
+		DebugText::GetInstance()->Print(50, 30 * 1, 2, "%f", camera->GetEye().x);
+		DebugText::GetInstance()->Print(50, 30 * 2, 2, "%f", camera->GetEye().y);
+	}
 
-	//}
-
-	DebugText::GetInstance()->Print(50, 30 * 1, 2, "%f", camera->GetEye().x);
-	DebugText::GetInstance()->Print(50, 30 * 2, 2, "%f", camera->GetEye().y);
-
-<<<<<<< HEAD
 	if (input->TriggerKey(DIK_SPACE))
 	{
 		p_pos = { map_max_x / 2 * LAND_SCALE,  -map_max_y / 2 * LAND_SCALE, 0 };
 	}
 
 	// 座標の変更を反映
-	objectX->SetPosition(p_pos);
 	camera->SetEye({ p_pos.x, p_pos.y + 3.0f, p_pos.z - 100.0f });
 	camera->SetTarget(p_pos);
-
-=======
 	Barrel::CollisionPlayer();
->>>>>>> master
 	//アップデート
 	camera->Update();
 	Barrel::Update(input);

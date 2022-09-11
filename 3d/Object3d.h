@@ -135,9 +135,6 @@ public: // メンバ関数
 	/// <param name="position">座標</param>
 	void SetPosition(XMFLOAT3 position) { this->position = position; }
 
-
-	void SetScale(const XMFLOAT3& scale) { this->scale = scale; }
-
 	/// <summary>
 	/// 回転角の取得
 	/// </summary>
