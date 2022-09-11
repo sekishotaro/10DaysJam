@@ -12,8 +12,6 @@ void GamePlayScene::Initialize()
 	Audio::GetInstance()->LoadWave("futta-dream.wav");
 	Audio::GetInstance()->LoadWave("zaza.wav");
 
-	//Audio::GetInstance()->PlayWave("zaza.wav", true);
-
 	// カメラ生成
 	camera = new Camera(WinApp::window_width, WinApp::window_height);
 
@@ -41,11 +39,19 @@ void GamePlayScene::Initialize()
 
 	Player::Initialize();
 
-	barrel1 = Barrel::Initialize(XMFLOAT3(0.0f, -15.0f, 0.0f));
-	
-	barrel2 = Barrel::Initialize(XMFLOAT3(0.0f, -25.0f, 0.0f));
 
-	//barrel2->SetPosition(XMFLOAT3(0.0f, -25.0f, 0.0f));
+	XMFLOAT3 posA = { -50.0f, -25.0f, 0.0f };
+	XMFLOAT3 posB = {  50.0f, -25.0f, 0.0f };
+
+	XMFLOAT3 posC = { -50.0f, -15.0f, 0.0f };
+	XMFLOAT3 posD = {  50.0f, -15.0f, 0.0f };
+
+	barrel1 = Barrel::Initialize(XMFLOAT3(0.0f, -25.0f, 0.0f), posA, posB);
+	
+	barrel2 = Barrel::Initialize(XMFLOAT3(0.0f, -15.0f, 0.0f), posC, posD);
+
+	barrelObject1->SetPosition(barrel1->GetPos());
+	barrelObject2->SetPosition(barrel2->GetPos());
 }
 
 void GamePlayScene::Finalize()
@@ -78,18 +84,18 @@ void GamePlayScene::Update()
 	DebugText::GetInstance()->Print(50, 30 * 1, 2, "%f", barrel1->GetPos().y);
 	DebugText::GetInstance()->Print(50, 30 * 2, 2, "%f", barrel2->GetPos().y);
 
-	//barrel1->CollisionPlayer();
-	//barrel2->CollisionPlayer();
+	barrel1->CollisionPlayer();
+	barrel2->CollisionPlayer();
 	//アップデート
 	camera->Update();
-	//barrel1->Update(input);
-	//barrel2->Update(input);
+	barrel1->Update(input);
+	barrel2->Update(input);
 	Player::Update(input);
 
-	//barrelObject1->SetPosition(barrel1->GetPos());
-	//barrelObject1->Update();
+	barrelObject1->SetPosition(barrel1->GetPos());
+	barrelObject1->Update();
 
-	//barrelObject2->SetPosition(barrel2->GetPos());
+	barrelObject2->SetPosition(barrel2->GetPos());
 	barrelObject2->Update();
 	
 }

@@ -22,10 +22,7 @@ private: // エイリアス
 	using XMFLOAT4 = DirectX::XMFLOAT4;
 	using XMMATRIX = DirectX::XMMATRIX;
 
-
 public:
-
-
 
 	/// <summary>
 	/// 初期化
