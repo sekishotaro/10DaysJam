@@ -5,12 +5,12 @@
 #include "DebugText.h"
 #include "DirectXCommon.h"
 
+#include "PLayer.h"
+
 void GamePlayScene::Initialize()
 {
 	Audio::GetInstance()->LoadWave("futta-dream.wav");
 	Audio::GetInstance()->LoadWave("zaza.wav");
-
-	//Audio::GetInstance()->PlayWave("zaza.wav", true);
 
 	// カメラ生成
 	camera = new Camera(WinApp::window_width, WinApp::window_height);
@@ -24,18 +24,40 @@ void GamePlayScene::Initialize()
 	// 背景スプライト生成
 	spriteBG = Sprite::Create(1, { 0.0f,0.0f });
 
-	// オブジェクト生成
-	model = Model::LoadFromOBJ("sphere");
+	//オブジェクト生成
+	BarrelModel = Model::LoadFromOBJ("block");
 
-	objectX = Object3d::Create();
+	barrelObject1 = Object3d::Create();
+	barrelObject2 = Object3d::Create();
 
 	//オブジェクトにモデルをひも付ける
-	objectX->SetModel(model);
+	barrelObject1->SetModel(BarrelModel);
+	barrelObject1->SetScale({ 0.5f, 0.5f, 0.5f });
+
+	barrelObject2->SetModel(BarrelModel);
+	barrelObject2->SetScale({ 0.5f, 0.5f, 0.5f });
+
+	Player::Initialize();
+
+
+	XMFLOAT3 posA = { -50.0f, -15.0f, 0.0f };
+	XMFLOAT3 posB = {  50.0f, -15.0f, 0.0f };
+
+	XMFLOAT3 posC = { -50.0f, -25.0f, 0.0f };
+	XMFLOAT3 posD = {  50.0f, -25.0f, 0.0f };
+
+	barrel1 = Barrel::Initialize(XMFLOAT3(0.0f, -15.0f, 0.0f), posA, posB);
+	
+	barrel2 = Barrel::Initialize(XMFLOAT3(0.0f, -25.0f, 0.0f), posC, posD);
+
+	barrelObject1->SetPosition(barrel1->GetPos());
+	barrelObject2->SetPosition(barrel2->GetPos());
 }
 
 void GamePlayScene::Finalize()
 {
-	delete model;
+	delete BarrelModel;
+	Player::Finalize();
 }
 
 void GamePlayScene::Update()
@@ -75,21 +97,23 @@ void GamePlayScene::Update()
 		camera->SetEye(position);
 	}
 
-	DebugText::GetInstance()->Print(50, 30 * 1, 2, "%f", camera->GetEye().x);
-	DebugText::GetInstance()->Print(50, 30 * 2, 2, "%f", camera->GetEye().y);
+	DebugText::GetInstance()->Print(50, 30 * 1, 2, "%f", barrel1->GetPos().y);
+	DebugText::GetInstance()->Print(50, 30 * 2, 2, "%f", barrel2->GetPos().y);
 
-	if (input->TriggerKey(DIK_SPACE))
-	{
-		//BGM止める
-		//Audio::GetInstance()->SoundStop("zaza.wav");
-		
-		//シーン切り替え
-		SceneManager::GetInstance()->ChangeScene("TITLE");
-	}
-
+	barrel1->CollisionPlayer();
+	barrel2->CollisionPlayer();
 	//アップデート
 	camera->Update();
-	objectX->Update();
+	barrel1->Update(input);
+	barrel2->Update(input);
+	Player::Update(input);
+
+	barrelObject1->SetPosition(barrel1->GetPos());
+	barrelObject1->Update();
+
+	barrelObject2->SetPosition(barrel2->GetPos());
+	barrelObject2->Update();
+	
 }
 
 void GamePlayScene::Draw()
@@ -117,11 +141,14 @@ void GamePlayScene::Draw()
 	Object3d::PreDraw(cmdList);
 
 	// 3Dオブクジェクトの描画
-	objectX->Draw();
+	barrelObject1->Draw();
+	barrelObject2->Draw();
 
 	/// <summary>
 	/// ここに3Dオブジェクトの描画処理を追加できる
 	/// </summary>
+	
+	Player::Draw();
 
 	// 3Dオブジェクト描画後処理
 	Object3d::PostDraw();

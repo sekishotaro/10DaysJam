@@ -219,6 +219,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Audio\Audio.cpp" />
+    <ClCompile Include="Barrel.cpp" />
+    <ClCompile Include="BarrelManager.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="collision\Collision.cpp" />
     <ClCompile Include="collision\CollisionPrimitive.cpp" />
@@ -241,6 +243,8 @@
     <ClCompile Include="SelectScene.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Barrel.h" />
+    <ClInclude Include="BarrelManager.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Mapchip.h" />
     <ClInclude Include="ResultScene.h" />

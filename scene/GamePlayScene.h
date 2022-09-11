@@ -9,17 +9,18 @@
 
 #include "Camera.h"
 
+#include "Barrel.h"
+
 class GamePlayScene : public BaseScene
 {
 private: // エイリアス
-// Microsoft::WRL::を省略
+	// Microsoft::WRL::を省略
 	template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
 	// DirectX::を省略
 	using XMFLOAT2 = DirectX::XMFLOAT2;
 	using XMFLOAT3 = DirectX::XMFLOAT3;
 	using XMFLOAT4 = DirectX::XMFLOAT4;
 	using XMMATRIX = DirectX::XMMATRIX;
-
 
 public:
 
@@ -49,8 +50,15 @@ public:
 	/// ゲームシーン用
 	/// </summary>
 	Sprite *spriteBG = nullptr;
-	std::unique_ptr<Object3d> objectX;
-	Model *model = nullptr;
 	Camera *camera = nullptr;
+
+	std::unique_ptr<Object3d> barrelObject1;
+	std::unique_ptr<Object3d> barrelObject2;
+	Model* BarrelModel;
+
+	Barrel* barrel1;
+	Barrel* barrel2;
+	/*Barrel* barrel1 = nullptr;
+	Barrel* barrel2 = nullptr;*/
 };
 
