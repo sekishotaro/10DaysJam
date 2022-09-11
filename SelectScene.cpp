@@ -1,5 +1,9 @@
 #include "SelectScene.h"
-
+#include "SceneManager.h"
+#include "Audio.h"
+#include "Input.h"
+#include "DebugText.h"
+#include "DirectXCommon.h"
 SelectScene::~SelectScene()
 {
 	Finalize();
@@ -15,7 +19,16 @@ void SelectScene::Finalize()
 
 void SelectScene::Update()
 {
+	// ゲームシーンの毎フレーム処理
+
 	Input* input = Input::GetInstance();
+
+	if (input->TriggerKey(DIK_SPACE))
+	{
+		//シーン切り替え
+		SceneManager::GetInstance()->ChangeScene("GAMEPLAY");
+	}
+
 }
 
 void SelectScene::Draw()

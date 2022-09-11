@@ -23,10 +23,10 @@ void TitleScene::Update()
 
 	Input *input = Input::GetInstance();
 
-	if (input->TriggerKey(DIK_RETURN))
+	if (input->TriggerKey(DIK_SPACE))
 	{
 		//ƒV[ƒ“Ø‚è‘Ö‚¦
-		SceneManager::GetInstance()->ChangeScene("GAMEPLAY");
+		SceneManager::GetInstance()->ChangeScene("SELECT");
 	}
 
 	DebugText::GetInstance()->Print(50, 20, 3, "fafa");
