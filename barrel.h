@@ -21,57 +21,66 @@ private:
 	/// 移動
 	/// </summary>
 	/// <param name="input">入力</param>
-	static void Move(Input* input);
+	//static void Move(Input* input);
 
 	/// <summary>
 	/// 横軸移動
 	/// </summary>
 	/// <param name="leftPos">左端の値</param>
 	/// <param name="rightPos">右端の値</param>
-	static void HorizontalMove(const XMFLOAT3& leftPos, const XMFLOAT3& rightPos);
+	//static void HorizontalMove(const XMFLOAT3& leftPos, const XMFLOAT3& rightPos);
 
 	/// <summary>
 	/// 自機に移動量の加算
 	/// </summary>
 	/// <param name="move">移動量</param>
-	static void AddPosMove(const XMFLOAT3& move);
+	//static void AddPosMove(const XMFLOAT3& move);
 
 	/// <summary>
 	/// 射出
 	/// </summary>
 	/// <param name="input">入力</param>
-	static void Injection(Input* input);
+	//static void Injection(Input* input);
 
 public:
+
+	//Barrel();
+
+	//~Barrel();
+
 
 	/// <summary>
 	/// 初期化
 	/// </summary>
-	static void  Initialize();
+	static Barrel *Initialize(const XMFLOAT3& position);
 
 	/// <summary>
 	/// 更新
 	/// </summary>
-	static void Update(Input* input);
+	//static void Update(Input* input);
 
 	/// <summary>
 	/// 解放
 	/// </summary>
-	static void Finalize();
+	//static void Finalize();
 
 	//描画
-	static void Draw();
+	//static void Draw();
 
 
 	const XMFLOAT3& GetPos() { return pos; }
 
+	/// <summary>
+	/// 位置情報のセット
+	/// </summary>
+	/// <param name="position">位置</param>
+	void SetPosition(const XMFLOAT3& position) { pos = position; }
+
 	//自機との衝突確認
-	static void CollisionPlayer();
+	//static void CollisionPlayer();
 
 private:
-	static std::unique_ptr<Object3d> objectX;
-	static Model* model;
-	static XMFLOAT3 pos;
+	XMFLOAT3 pos;
 	static XMFLOAT3 move;
 
 	static bool barrelInFlag;

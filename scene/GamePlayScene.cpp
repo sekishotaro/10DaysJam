@@ -6,7 +6,6 @@
 #include "DirectXCommon.h"
 
 #include "PLayer.h"
-#include "Barrel.h"
 
 void GamePlayScene::Initialize()
 {
@@ -27,23 +26,32 @@ void GamePlayScene::Initialize()
 	// 背景スプライト生成
 	spriteBG = Sprite::Create(1, { 0.0f,0.0f });
 
-	// オブジェクト生成
-	//model = Model::LoadFromOBJ("sphere");
-	//objectX = Object3d::Create();
-	//オブジェクトにモデルをひも付ける
-	//objectX->SetModel(model);
+	//オブジェクト生成
+	BarrelModel = Model::LoadFromOBJ("block");
 
+	barrelObject1 = Object3d::Create();
+	barrelObject2 = Object3d::Create();
+
+	//オブジェクトにモデルをひも付ける
+	barrelObject1->SetModel(BarrelModel);
+	barrelObject1->SetScale({ 0.5f, 0.5f, 0.5f });
+
+	barrelObject2->SetModel(BarrelModel);
+	barrelObject2->SetScale({ 0.5f, 0.5f, 0.5f });
 
 	Player::Initialize();
-	Barrel::Initialize();
+
+	barrel1 = Barrel::Initialize(XMFLOAT3(0.0f, -15.0f, 0.0f));
 	
+	barrel2 = Barrel::Initialize(XMFLOAT3(0.0f, -25.0f, 0.0f));
+
+	//barrel2->SetPosition(XMFLOAT3(0.0f, -25.0f, 0.0f));
 }
 
 void GamePlayScene::Finalize()
 {
-	//delete model;
+	delete BarrelModel;
 	Player::Finalize();
-	Barrel::Finalize();
 }
 
 void GamePlayScene::Update()
@@ -67,14 +75,22 @@ void GamePlayScene::Update()
 		camera->SetEye(position);
 	}
 
-	DebugText::GetInstance()->Print(50, 30 * 1, 2, "%f", camera->GetEye().x);
-	DebugText::GetInstance()->Print(50, 30 * 2, 2, "%f", camera->GetEye().y);
+	DebugText::GetInstance()->Print(50, 30 * 1, 2, "%f", barrel1->GetPos().y);
+	DebugText::GetInstance()->Print(50, 30 * 2, 2, "%f", barrel2->GetPos().y);
 
-	Barrel::CollisionPlayer();
+	//barrel1->CollisionPlayer();
+	//barrel2->CollisionPlayer();
 	//アップデート
 	camera->Update();
-	Barrel::Update(input);
+	//barrel1->Update(input);
+	//barrel2->Update(input);
 	Player::Update(input);
+
+	//barrelObject1->SetPosition(barrel1->GetPos());
+	//barrelObject1->Update();
+
+	//barrelObject2->SetPosition(barrel2->GetPos());
+	barrelObject2->Update();
 	
 }
 
@@ -103,14 +119,14 @@ void GamePlayScene::Draw()
 	Object3d::PreDraw(cmdList);
 
 	// 3Dオブクジェクトの描画
-	//objectX->Draw();
+	barrelObject1->Draw();
+	barrelObject2->Draw();
 
 	/// <summary>
 	/// ここに3Dオブジェクトの描画処理を追加できる
 	/// </summary>
 	
 	Player::Draw();
-	Barrel::Draw();
 
 	// 3Dオブジェクト描画後処理
 	Object3d::PostDraw();
