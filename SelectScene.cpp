@@ -28,7 +28,7 @@ void SelectScene::Update()
 		//シーン切り替え
 		SceneManager::GetInstance()->ChangeScene("GAMEPLAY");
 	}
-
+	DebugText::GetInstance()->Print(50, 20, 3, "select");
 }
 
 void SelectScene::Draw()
@@ -53,7 +53,8 @@ void SelectScene::Draw()
 #pragma region 前景スプライト描画
 	// 前景スプライト描画前処理
 	Sprite::PreDraw(cmdList);
-
+	// デバッグテキストの描画
+	DebugText::GetInstance()->DrawAll(cmdList);
 	// スプライト描画後処理
 	Sprite::PostDraw();
 #pragma endregion 前景スプライト描画
