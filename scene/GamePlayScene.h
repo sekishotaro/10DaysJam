@@ -7,10 +7,7 @@
 
 #include <memory>
 
-#include "Mapchip.h"
 #include "Camera.h"
-
-
 
 class GamePlayScene : public BaseScene
 {
@@ -22,6 +19,7 @@ private: // エイリアス
 	using XMFLOAT3 = DirectX::XMFLOAT3;
 	using XMFLOAT4 = DirectX::XMFLOAT4;
 	using XMMATRIX = DirectX::XMMATRIX;
+
 
 public:
 
@@ -45,39 +43,14 @@ public:
 	/// </summary>
 	void Draw() override;
 
-	// マップチップ用
-	void MapCreate(int mapNumber);
-	int GetLeftMapChip(XMFLOAT3 position);
-	int GetRightMapChip(XMFLOAT3 position);
-	int GetUpMapChip(XMFLOAT3 position);
-
-	//マップチップ1つの大きさ
-	const float LAND_SCALE = 5.0f;
-	//マップチップの番号
-	enum MapNumber
-	{
-		None, Coin
-	};
-	//mapchipオブジェクト
-	std::vector<std::vector<int>> map; //マップチップ
-	std::unique_ptr<Object3d> objBlock[map_max_y][map_max_x]; //ステージブロック
-
-	// モデル
-	Model* block = nullptr;
 
 
 	/// <summary>
 	/// ゲームシーン用
 	/// </summary>
 	Sprite *spriteBG = nullptr;
-	//std::unique_ptr<Object3d> objectX;
-	//Model *model = nullptr;
+	std::unique_ptr<Object3d> objectX;
+	Model *model = nullptr;
 	Camera *camera = nullptr;
-
-	// プレイヤー変数
-	XMFLOAT3 p_pos;
-
-	// カメラ変数
-	XMFLOAT3 c_pos;
 };
 

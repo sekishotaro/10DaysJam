@@ -5,9 +5,6 @@
 #include "DebugText.h"
 #include "DirectXCommon.h"
 
-#include "PLayer.h"
-#include "Barrel.h"
-
 void GamePlayScene::Initialize()
 {
 	Audio::GetInstance()->LoadWave("futta-dream.wav");
@@ -28,75 +25,71 @@ void GamePlayScene::Initialize()
 	spriteBG = Sprite::Create(1, { 0.0f,0.0f });
 
 	// オブジェクト生成
-	block = Model::LoadFromOBJ("block");
+	model = Model::LoadFromOBJ("sphere");
 
-	//マップチップ用のCSV読み込み
-	//(map, "Resource/scv/なんたら.csv")で追加可能
-	Mapchip::CsvToVector(map, "Resources/csv/tutorial.csv");//mapNum=0
-	
-	//マップチップ用のオブジェクトの初期化
-	for (int y = 0; y < map_max_y; y++)
-	{
-		for (int x = 0; x < map_max_x; x++)
-		{
-			objBlock[y][x] = Object3d::Create();
-			objBlock[y][x]->SetModel(block);
-			objBlock[y][x]->SetScale({ 1.0f,1.0f,1.0f });
-			objBlock[y][x]->SetPosition({ 1000.0f,1000.0f,0.0f });
-		}
-	}
+	objectX = Object3d::Create();
 
-	Player::Initialize();
-	Barrel::Initialize();
+	//オブジェクトにモデルをひも付ける
+	objectX->SetModel(model);
 }
 
 void GamePlayScene::Finalize()
 {
-	//delete model;
-	Player::Finalize();
-	Barrel::Finalize();
+	delete model;
 }
 
 void GamePlayScene::Update()
 {
 	// ゲームシーンの毎フレーム処理
 	
-	Input* input = Input::GetInstance();
+	Input *input = Input::GetInstance();
 
-	// マップチップ生成
-	MapCreate(0);
-	for (int y = 0; y < map_max_y; y++)
+	//オブジェクト移動
+	if (input->PushKey(DIK_UP) || input->PushKey(DIK_DOWN) || input->PushKey(DIK_RIGHT) || input->PushKey(DIK_LEFT))
 	{
-		for (int x = 0; x < map_max_x; x++)
-		{
-			objBlock[y][x]->Update();
-		}
-	}
+		// 現在の座標を取得
+		XMFLOAT3 position = objectX->GetPosition();
 
+		// 移動後の座標を計算
+		if (input->PushKey(DIK_UP)) { position.y += 1.0f; }
+		else if (input->PushKey(DIK_DOWN)) { position.y -= 1.0f; }
+		if (input->PushKey(DIK_RIGHT)) { position.x += 1.0f; }
+		else if (input->PushKey(DIK_LEFT)) { position.x -= 1.0f; }
+
+		// 座標の変更を反映
+		objectX->SetPosition(position);
+	}
 
 	if (input->PushKey(DIK_W) || input->PushKey(DIK_S) || input->PushKey(DIK_D) || input->PushKey(DIK_A))
 	{
 		// 現在の座標を取得
 		XMFLOAT3 position = camera->GetEye();
 
-		DebugText::GetInstance()->Print(50, 30 * 1, 2, "%f", camera->GetEye().x);
-		DebugText::GetInstance()->Print(50, 30 * 2, 2, "%f", camera->GetEye().y);
+		// 移動後の座標を計算
+		if (input->PushKey(DIK_W)) { position.y += 1.0f; }
+		else if (input->PushKey(DIK_S)) { position.y -= 1.0f; }
+		if (input->PushKey(DIK_D)) { position.x += 1.0f; }
+		else if (input->PushKey(DIK_A)) { position.x -= 1.0f; }
+
+		// 座標の変更を反映
+		camera->SetEye(position);
 	}
+
+	DebugText::GetInstance()->Print(50, 30 * 1, 2, "%f", camera->GetEye().x);
+	DebugText::GetInstance()->Print(50, 30 * 2, 2, "%f", camera->GetEye().y);
 
 	if (input->TriggerKey(DIK_SPACE))
 	{
-		p_pos = { map_max_x / 2 * LAND_SCALE,  -map_max_y / 2 * LAND_SCALE, 0 };
+		//BGM止める
+		//Audio::GetInstance()->SoundStop("zaza.wav");
+		
+		//シーン切り替え
+		SceneManager::GetInstance()->ChangeScene("TITLE");
 	}
 
-	// 座標の変更を反映
-	camera->SetEye({ p_pos.x, p_pos.y + 3.0f, p_pos.z - 100.0f });
-	camera->SetTarget(p_pos);
-	Barrel::CollisionPlayer();
 	//アップデート
 	camera->Update();
-	Barrel::Update(input);
-	Player::Update(input);
-	
+	objectX->Update();
 }
 
 void GamePlayScene::Draw()
@@ -124,23 +117,11 @@ void GamePlayScene::Draw()
 	Object3d::PreDraw(cmdList);
 
 	// 3Dオブクジェクトの描画
-	//objectX->Draw();
-
-	//マップチップの描画
-	for (int y = 0; y < map_max_y; y++)
-	{
-		for (int x = 0; x < map_max_x; x++)
-		{
-			objBlock[y][x]->Draw();
-		}
-	}
+	objectX->Draw();
 
 	/// <summary>
 	/// ここに3Dオブジェクトの描画処理を追加できる
 	/// </summary>
-	
-	Player::Draw();
-	Barrel::Draw();
 
 	// 3Dオブジェクト描画後処理
 	Object3d::PostDraw();
@@ -153,41 +134,4 @@ void GamePlayScene::Draw()
 
 	// スプライト描画後処理
 	Sprite::PostDraw();
-}
-
-void GamePlayScene::MapCreate(int mapNumber)
-{
-	for (int y = 0; y < map_max_y; y++) {//(yが12)
-		for (int x = 0; x < map_max_x; x++) {//(xが52)
-
-			if (Mapchip::GetChipNum(x, y, map[mapNumber]) == Coin)
-			{
-				//位置と大きさの変更(今は大きさは変更しないで)
-				//objBlock[y][x]->SetScale({ LAND_SCALE, LAND_SCALE, LAND_SCALE });
-				objBlock[y][x]->SetPosition({ x * LAND_SCALE,  -y * LAND_SCALE, 0 });
-			}
-			else
-			{
-				objBlock[y][x]->SetPosition({ 1000, 1000, 0 });
-			}
-		}
-	}
-}
-
-int GamePlayScene::GetLeftMapChip(XMFLOAT3 position)
-{
-	int chip = Mapchip::GetChipNum(static_cast<int>((position.x + LAND_SCALE / 2) / LAND_SCALE - 1), -static_cast<int>((position.y - LAND_SCALE / 2) / LAND_SCALE), map[0]);
-	return chip;
-}
-
-int GamePlayScene::GetRightMapChip(XMFLOAT3 position)
-{
-	int chip = Mapchip::GetChipNum(static_cast<int>((position.x + LAND_SCALE / 2) / LAND_SCALE + 1), -static_cast<int>((position.y - LAND_SCALE / 2) / LAND_SCALE), map[0]);
-	return chip;
-}
-
-int GamePlayScene::GetUpMapChip(XMFLOAT3 position)
-{
-	int chip = Mapchip::GetChipNum(static_cast<int>((position.x + LAND_SCALE / 2) / LAND_SCALE), -static_cast<int>((position.y - LAND_SCALE / 2) / LAND_SCALE + 1), map[0]);
-	return chip;
 }
