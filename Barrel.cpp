@@ -7,10 +7,10 @@ bool Barrel::moveFlag = true;
 
 void Barrel::Move(Input* input)
 {
-	HorizontalMove(posA, posB);
+	StraightMove(posA, posB);
 }
 
-void Barrel::HorizontalMove(const XMFLOAT3& leftPos, const XMFLOAT3& rightPos)
+void Barrel::StraightMove(const XMFLOAT3& leftPos, const XMFLOAT3& rightPos)
 {
 	//’M‚Ì’†‚É‚¢‚È‚¯‚ê‚Î“®‚©‚È‚¢
 	if (barrelInFlag == false)
@@ -26,8 +26,6 @@ void Barrel::HorizontalMove(const XMFLOAT3& leftPos, const XMFLOAT3& rightPos)
 	{
 		targetPos = rightPos;
 	}
-
-	
 
 	XMFLOAT3 dis = { targetPos.x - pos.x,  targetPos.y - pos.y , targetPos.z - pos.z };
 
@@ -55,12 +53,13 @@ void Barrel::Injection(Input* input)
  		return;
 	}
 
-	if (input->PushKey(DIK_SPACE))
+	if (input->PushKey(DIK_SPACE) && barrelIndividualInFlag == true)
 	{
 		//‚Ç‚ê‚¾‚¯”ò‚Î‚·‚©
 		XMFLOAT3 InjectionMove = { pos.x, 30.0f, pos.z };
 		Player::AddInjectionMove(InjectionMove);
 		barrelInFlag = false;
+		barrelIndividualInFlag = false;
 		Player::BarrelOut();
 	}
 }
@@ -82,6 +81,7 @@ void Barrel::CollisionPlayer()
 	if (Collision::CheckSphereSphere(sphere1, sphere2) == true)
 	{
 		barrelInFlag = true;
+		barrelIndividualInFlag = true;
 		Player::GravityForcedEnd();
 		Player::BarrelIn();
 	}
@@ -98,13 +98,13 @@ Barrel* Barrel::Initialize(const XMFLOAT3& position, const XMFLOAT3& posA, const
 }
 
 void Barrel::Update(Input* input)
-{
+{	
+	Injection(input);
+
 	Move(input);
-	
-	if (barrelInFlag == true)
+
+	if (barrelInFlag == true && barrelIndividualInFlag == true)
 	{
 		Player::SetPosition(pos);
 	}
-
-	Injection(input);
 }

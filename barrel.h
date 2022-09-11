@@ -37,7 +37,7 @@ private:
 	/// </summary>
 	/// <param name="leftPos">左端の値</param>
 	/// <param name="rightPos">右端の値</param>
-	void HorizontalMove(const XMFLOAT3& leftPos, const XMFLOAT3& rightPos);
+	void StraightMove(const XMFLOAT3& leftPos, const XMFLOAT3& rightPos);
 
 	/// <summary>
 	/// 自機に移動量の加算
@@ -82,6 +82,8 @@ private:
 	XMFLOAT3 move = { 0,0,0 };
 
 	XMFLOAT3 targetPos = { 0,0,0 };
+
+	bool barrelIndividualInFlag = false;
 
 	static bool barrelInFlag;
 	static bool moveFlag;

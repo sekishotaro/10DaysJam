@@ -40,15 +40,15 @@ void GamePlayScene::Initialize()
 	Player::Initialize();
 
 
-	XMFLOAT3 posA = { -50.0f, -25.0f, 0.0f };
-	XMFLOAT3 posB = {  50.0f, -25.0f, 0.0f };
+	XMFLOAT3 posA = { -50.0f, -15.0f, 0.0f };
+	XMFLOAT3 posB = {  50.0f, -15.0f, 0.0f };
 
-	XMFLOAT3 posC = { -50.0f, -15.0f, 0.0f };
-	XMFLOAT3 posD = {  50.0f, -15.0f, 0.0f };
+	XMFLOAT3 posC = { -50.0f, -25.0f, 0.0f };
+	XMFLOAT3 posD = {  50.0f, -25.0f, 0.0f };
 
-	barrel1 = Barrel::Initialize(XMFLOAT3(0.0f, -25.0f, 0.0f), posA, posB);
+	barrel1 = Barrel::Initialize(XMFLOAT3(0.0f, -15.0f, 0.0f), posA, posB);
 	
-	barrel2 = Barrel::Initialize(XMFLOAT3(0.0f, -15.0f, 0.0f), posC, posD);
+	barrel2 = Barrel::Initialize(XMFLOAT3(0.0f, -25.0f, 0.0f), posC, posD);
 
 	barrelObject1->SetPosition(barrel1->GetPos());
 	barrelObject2->SetPosition(barrel2->GetPos());
