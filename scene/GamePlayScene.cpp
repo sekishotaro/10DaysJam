@@ -28,7 +28,7 @@ void GamePlayScene::Initialize()
 	spriteBG = Sprite::Create(1, { 0.0f,0.0f });
 
 	// オブジェクト生成
-	block = Model::LoadFromOBJ("block");
+	item = Model::LoadFromOBJ("block");
 
 	//マップチップ用のCSV読み込み
 	//(map, "Resource/scv/なんたら.csv")で追加可能
@@ -39,19 +39,15 @@ void GamePlayScene::Initialize()
 	{
 		for (int x = 0; x < map_max_x; x++)
 		{
-			objBlock[y][x] = Object3d::Create();
-			objBlock[y][x]->SetModel(block);
-			objBlock[y][x]->SetScale({ 1.0f,1.0f,1.0f });
-			objBlock[y][x]->SetPosition({ 1000.0f,1000.0f,0.0f });
+			objItem[y][x] = Object3d::Create();
+			objItem[y][x]->SetModel(item);
+			objItem[y][x]->SetScale({ 1.0f,1.0f,1.0f });
+			objItem[y][x]->SetPosition({ 1000.0f,1000.0f,0.0f });
 		}
 	}
 
 	Player::Initialize();
 	Barrel::Initialize();
-
-	// 半径取得
-	//p_radius_x = 0.5f * Player::GetScale().x;
-	//p_radius_y = 0.5f * Player::GetScale().y;
 }
 
 void GamePlayScene::Finalize()
@@ -70,6 +66,9 @@ void GamePlayScene::Update()
 	// 座標更新
 	p_pos = Player::GetPos();
 	old_p_pos = p_pos;
+	// 半径取得
+	p_radius_x = 0.5f * Player::GetScale().x;
+	p_radius_y = 0.5f * Player::GetScale().y;
 
 	// マップチップ生成
 	MapCreate(0);
@@ -77,13 +76,14 @@ void GamePlayScene::Update()
 	{
 		for (int x = 0; x < map_max_x; x++)
 		{
-			objBlock[y][x]->Update();
+			objItem[y][x]->Update();
 		}
 	}
 
 	// マップチップ当たり判定
 	if (MapCollide(p_pos, p_radius_x, p_radius_y, 0, old_p_pos))
 	{
+		Mapchip::ChangeChipNum(width, height, map[0]);
 		DebugText::GetInstance()->Print(50, 30 * 3, 2, "ObjectHit");
 	}
 
@@ -131,7 +131,7 @@ void GamePlayScene::Draw()
 	{
 		for (int x = 0; x < map_max_x; x++)
 		{
-			objBlock[y][x]->Draw();
+			objItem[y][x]->Draw();
 		}
 	}
 
@@ -160,89 +160,97 @@ void GamePlayScene::MapCreate(int mapNumber)
 	for (int y = 0; y < map_max_y; y++) {//(yが12)
 		for (int x = 0; x < map_max_x; x++) {//(xが52)
 
-			if (Mapchip::GetChipNum(x, y, map[mapNumber]) == Coin)
+			if (Mapchip::GetChipNum(x, y, map[mapNumber]) == Item)
 			{
 				//位置と大きさの変更(今は大きさは変更しないで)
-				//objBlock[y][x]->SetScale({ LAND_SCALE, LAND_SCALE, LAND_SCALE });
-				objBlock[y][x]->SetPosition({ x * LAND_SCALE,  -y * LAND_SCALE, 0 });
+				//objItem[y][x]->SetScale({ LAND_SCALE, LAND_SCALE, LAND_SCALE });
+				objItem[y][x]->SetPosition({ x * LAND_SCALE,  -y * LAND_SCALE, 0 });
 			}
 			else
 			{
-				objBlock[y][x]->SetPosition({ 1000, 1000, 0 });
+				objItem[y][x]->SetPosition({ 1000, 1000, 0 });
 			}
 		}
 	}
 }
 
-bool GamePlayScene::MapCollide(XMFLOAT3& pos, float radiusX, float radiusY, int mapNumber, const XMFLOAT3 old_pos)
+bool GamePlayScene::MapCollide(XMFLOAT3& pos, float radiusX, float radiusY, int mapNumber, const XMFLOAT3 oldPos)
 {
 	//マップチップ
 	//X, Y
-	float x = 0;
-	float y = 0;
+	float mapX = 0;
+	float mapY = 0;
 	//Radius
-	float r_x = 0;
-	float r_y = 0;
+	float mapRadiusX = 0;
+	float mapRadiusY = 0;
 
 	//フラグ
-	bool is_hit = false;
+	bool hitFlag = false;
 
 	//判定
-	int max_x = static_cast<int>((pos.x + radiusX + LAND_SCALE / 2) / LAND_SCALE);
-	int min_x = static_cast<int>((pos.x - radiusX + LAND_SCALE / 2) / LAND_SCALE);
-	int max_y = -static_cast<int>((pos.y - radiusY + LAND_SCALE / 2) / LAND_SCALE - 1);
-	int min_y = -static_cast<int>((pos.y + radiusY + LAND_SCALE / 2) / LAND_SCALE - 1);
+	int mapMaxX = static_cast<int>((pos.x + radiusX + LAND_SCALE / 2) / LAND_SCALE);
+	int mapMinX = static_cast<int>((pos.x - radiusX + LAND_SCALE / 2) / LAND_SCALE);
+	int mapMaxY = -static_cast<int>((pos.y - radiusY + LAND_SCALE / 2) / LAND_SCALE - 1);
+	int mapMinY = -static_cast<int>((pos.y + radiusY + LAND_SCALE / 2) / LAND_SCALE - 1);
 
-	for (int h = min_y; h <= max_y; h++)
+	for (int h = mapMinY; h <= mapMaxY; h++)
 	{
 		if (h < 0)
 		{
 			continue;
 		}
-		for (int w = min_x; w <= max_x; w++)
+		for (int w = mapMinX; w <= mapMaxX; w++)
 		{
 			if (w < 0)
 			{
 				continue;
 			}
-			if (Mapchip::GetChipNum(w, h, map[mapNumber]) == Coin)
+			if (Mapchip::GetChipNum(w, h, map[mapNumber]) == Item)
 			{
-				x = objBlock[h][w]->GetPosition().x;
-				y = objBlock[h][w]->GetPosition().y;
-				r_x = 2.5f * objBlock[h][w]->GetScale().x;
-				r_y = 2.5f * objBlock[h][w]->GetScale().y;
+				mapX = objItem[h][w]->GetPosition().x;
+				mapY = objItem[h][w]->GetPosition().y;
+				mapRadiusX = 2.0f * objItem[h][w]->GetScale().x;
+				mapRadiusY = 2.0f * objItem[h][w]->GetScale().y;
 
-				if (pos.x <= x + r_x && x - r_x <= pos.x)
+				if (pos.x <= mapX + mapRadiusX && mapX - mapRadiusX <= pos.x)
 				{
-					if (y + r_y + radiusY > pos.y && y < old_pos.y)
+					if (mapY + mapRadiusY + radiusY > pos.y && mapY < oldPos.y)
 					{
-						pos.y = y + r_y + radiusY;
-						is_hit = true;
+						pos.y = mapY + mapRadiusY + radiusY;
+						hitFlag = true;
+						height = h;
+						width = w;
 					}
-					else if (y - r_y - radiusY < pos.y && y > old_pos.y)
+					else if (mapY - mapRadiusY - radiusY < pos.y && mapY > oldPos.y)
 					{
-						pos.y = y - r_y - radiusY;
-						is_hit = true;
+						pos.y = mapY - mapRadiusY - radiusY;
+						hitFlag = true;
+						height = h;
+						width = w;
 					}
 				}
-				if (pos.y <= y + r_y && y - r_y <= pos.y)
+				if (pos.y <= mapY + mapRadiusY && mapY - mapRadiusY <= pos.y)
 				{
-					if (x + r_x + radiusX > pos.x && x < old_pos.x)
+					if (mapX + mapRadiusX + radiusX > pos.x && mapX < oldPos.x)
 					{
-						pos.x = x + r_x + radiusX;
-						is_hit = true;
+						pos.x = mapX + mapRadiusX + radiusX;
+						hitFlag = true;
+						height = h;
+						width = w;
 					}
-					else if (x - r_x - radiusX < pos.x && x > old_pos.x)
+					else if (mapX - mapRadiusX - radiusX < pos.x && mapX > oldPos.x)
 					{
-						pos.x = x - r_x - radiusX;
-						is_hit = true;
+						pos.x = mapX - mapRadiusX - radiusX;
+						hitFlag = true;
+						height = h;
+						width = w;
 					}
 				}
 			}
 		}
 	}
 
-	return is_hit;
+	return hitFlag;
 }
 
 int GamePlayScene::GetLeftMapChip(XMFLOAT3 position)

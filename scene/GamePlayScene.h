@@ -48,7 +48,7 @@ public:
 	// マップチップ生成
 	void MapCreate(int mapNumber);
 	// マップチップ当たり判定
-	bool MapCollide(XMFLOAT3& pos, float radiusX, float radiusY, int mapNumber, const XMFLOAT3 old_pos);
+	bool MapCollide(XMFLOAT3& pos, float radiusX, float radiusY, int mapNumber, const XMFLOAT3 oldPos);
 	// 位置取得
 	int GetLeftMapChip(XMFLOAT3 position);
 	int GetRightMapChip(XMFLOAT3 position);
@@ -59,15 +59,18 @@ public:
 	//マップチップの番号
 	enum MapNumber
 	{
-		None, Coin
+		None, Item
 	};
 	//mapchipオブジェクト
 	std::vector<std::vector<int>> map; //マップチップ
-	std::unique_ptr<Object3d> objBlock[map_max_y][map_max_x]; //ステージブロック
-
+	std::unique_ptr<Object3d> objItem[map_max_y][map_max_x]; // ステージブロック
 	// モデル
-	Model* block = nullptr;
-
+	Model* item = nullptr;
+	// 管理フラグ
+	bool hitFlag = false;
+	// マップ番号
+	int height;
+	int width;
 
 	/// <summary>
 	/// ゲームシーン用

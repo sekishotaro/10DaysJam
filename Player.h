@@ -94,11 +94,18 @@ public:
 	/// <param name="position">位置</param>
 	static void SetPosition(const XMFLOAT3& position) { pos = position; }
 
+	/// <summary>
+	/// 大きさの取得
+	/// </summary>
+	/// <returns>大きさ</returns>
+	static const XMFLOAT3& GetScale() { return scale; }
+
 private:
 	static std::unique_ptr<Object3d> objectX;	//オブジェクト
 	static Model* model;						//モデル
 	static XMFLOAT3 pos;						//位置
 	static XMFLOAT3 move;						//移動量
+	static XMFLOAT3 scale;						//大きさ
 
 	static bool barrelInFlag;					//樽の中に入ってるかの確認フラグ
 	static XMFLOAT3 barrelPos;					//樽の位置確認用
