@@ -4,6 +4,7 @@
 #include "Input.h"
 #include "DebugText.h"
 #include "DirectXCommon.h"
+#include "Fornt.h"
 
 void TitleScene::Initialize()
 {
@@ -29,7 +30,7 @@ void TitleScene::Update()
 		SceneManager::GetInstance()->ChangeScene("SELECT");
 	}
 
-	DebugText::GetInstance()->Print(50, 20, 3, "fafa");
+	Fornt::GetInstance()->Print(50, 20, 3, "0123456789");
 }
 
 void TitleScene::Draw()
@@ -68,7 +69,7 @@ void TitleScene::Draw()
 
 	// デバッグテキストの描画
 	DebugText::GetInstance()->DrawAll(cmdList);
-
+	Fornt::GetInstance()->DrawAll(cmdList);
 	// スプライト描画後処理
 	Sprite::PostDraw();
 }

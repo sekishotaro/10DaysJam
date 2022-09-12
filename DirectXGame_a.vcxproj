@@ -226,6 +226,7 @@
     <ClCompile Include="collision\CollisionPrimitive.cpp" />
     <ClCompile Include="2d\DebugText.cpp" />
     <ClCompile Include="base\DirectXCommon.cpp" />
+    <ClCompile Include="Fornt.cpp" />
     <ClCompile Include="Framework.cpp" />
     <ClCompile Include="Mapchip.cpp" />
     <ClCompile Include="MyMath.cpp" />
@@ -248,6 +249,7 @@
     <ClInclude Include="Barrel.h" />
     <ClInclude Include="BarrelManager.h" />
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="Fornt.h" />
     <ClInclude Include="Mapchip.h" />
     <ClInclude Include="MyMath.h" />
     <ClInclude Include="Player.h" />

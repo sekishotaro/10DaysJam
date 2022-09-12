@@ -9,7 +9,7 @@
 #include "DebugText.h"
 #include "SceneManager.h"
 #include "AbstractSceneFactory.h"
-
+#include "Fornt.h"
 #include <memory>
 #include "Camera.h"
 
@@ -60,6 +60,9 @@ protected:
 
 	//デバックテキスト
 	DebugText *debugText = nullptr;
+	//text
+	Fornt* fontText = nullptr;
+	static const int fontTextTexnumber = 0;
 	static const int debugTextTexNumber = 0;
 
 	//シーンファクトリー

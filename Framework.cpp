@@ -29,7 +29,9 @@ void Framework::Initialize()
 	// デバックテキスト
 	Sprite::LoadTexture(debugTextTexNumber, L"Resources/ASCII.png");
 	DebugText::GetInstance()->Initialize(debugTextTexNumber);
-
+	//fonttext
+	Sprite::LoadTexture(fontTextTexnumber, L"Resources/fornt.png");
+	Fornt::GetInstance()->Initialize(fontTextTexnumber);
 	camera = new Camera(WinApp::window_width, WinApp::window_height);
 
 	//3Dオブジェクト静的初期化
