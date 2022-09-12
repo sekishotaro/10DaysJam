@@ -12,8 +12,6 @@ enum MovePattern
 	obliwue,		//斜め
 };
 
-
-
 class Barrel
 {
 private: // エイリアス

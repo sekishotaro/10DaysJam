@@ -56,7 +56,7 @@ void Barrel::Injection(Input* input)
 	if (input->PushKey(DIK_SPACE) && barrelIndividualInFlag == true)
 	{
 		//‚Ç‚ê‚¾‚¯”ò‚Î‚·‚©
-		XMFLOAT3 InjectionMove = { pos.x, 30.0f, pos.z };
+		XMFLOAT3 InjectionMove = { pos.x, 20.0f, pos.z };
 		Player::AddInjectionMove(InjectionMove);
 		barrelInFlag = false;
 		barrelIndividualInFlag = false;

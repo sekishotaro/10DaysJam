@@ -10,6 +10,7 @@
 #include "Camera.h"
 
 #include "Barrel.h"
+#include <Mapchip.h>
 
 class GamePlayScene : public BaseScene
 {
@@ -44,7 +45,32 @@ public:
 	/// </summary>
 	void Draw() override;
 
+	// マップチップ生成
+	void MapCreate(int mapNumber);
+	// マップチップ当たり判定
+	bool MapCollide(XMFLOAT3& pos, float radiusX, float radiusY, int mapNumber, const XMFLOAT3 oldPos);
+	// 位置取得
+	int GetLeftMapChip(XMFLOAT3 position);
+	int GetRightMapChip(XMFLOAT3 position);
+	int GetUpMapChip(XMFLOAT3 position);
 
+	//マップチップ1つの大きさ
+	const float LAND_SCALE = 5.0f;
+	//マップチップの番号
+	enum MapNumber
+	{
+		None, Item
+	};
+	//mapchipオブジェクト
+	std::vector<std::vector<int>> map; //マップチップ
+	std::unique_ptr<Object3d> objItem[map_max_y][map_max_x]; // ステージブロック
+	// モデル
+	Model* item = nullptr;
+	// 管理フラグ
+	bool hitFlag = false;
+	// マップ番号
+	int height;
+	int width;
 
 	/// <summary>
 	/// ゲームシーン用
@@ -52,13 +78,18 @@ public:
 	Sprite *spriteBG = nullptr;
 	Camera *camera = nullptr;
 
+	// バレル
 	std::unique_ptr<Object3d> barrelObject1;
 	std::unique_ptr<Object3d> barrelObject2;
 	Model* BarrelModel;
 
+	// プレイヤー変数
+	XMFLOAT3 p_pos;
+	XMFLOAT3 old_p_pos;
+	float p_radius_x;
+	float p_radius_y;
+
 	Barrel* barrel1;
 	Barrel* barrel2;
-	/*Barrel* barrel1 = nullptr;
-	Barrel* barrel2 = nullptr;*/
 };
 
