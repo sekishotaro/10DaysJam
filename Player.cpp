@@ -4,8 +4,9 @@
 std::unique_ptr<Object3d> Player::objectX;
 Model* Player::model = nullptr;
 
-Player::XMFLOAT3 Player::pos = { 0.0f, 0.0f, 0.0f };
+Player::XMFLOAT3 Player::pos = { 0.0f, -50.0f, 0.0f };
 Player::XMFLOAT3 Player::move = { 0.0f ,0.0f, 0.0f };
+Player::XMFLOAT3 Player::scale = { 2.0f ,2.0f, 2.0f };
 Player::XMFLOAT3 Player::barrelPos = { 0.0f, 0.0f, 0.0f };
 Player::XMFLOAT3 Player::injectionMove = { 0.0f, 0.0f, 0.0f };
 bool Player::barrelInFlag = false;
@@ -25,6 +26,7 @@ void Player::Initialize()
 
 	//オブジェクトにモデルをひも付ける
 	objectX->SetModel(model);
+	objectX->SetScale(scale);
 }
 
 void Player::Move(Input *input)

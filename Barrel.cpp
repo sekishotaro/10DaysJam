@@ -2,12 +2,28 @@
 #include "Player.h"
 #include "Collision.h"
 
+<<<<<<< HEAD
+=======
+std::unique_ptr<Object3d> Barrel::objectX;
+Model* Barrel::model = nullptr;
+
+Barrel::XMFLOAT3 Barrel::pos = { 0.0f, -65.0f, 0.0f };
+Barrel::XMFLOAT3 Barrel::move = { 1.0f ,0.0f, 0.0f };
+Barrel::XMFLOAT3 Barrel::scale = { 1.0f, 1.0f, 1.0f };
+
+>>>>>>> kuri
 bool Barrel::barrelInFlag = false;
 bool Barrel::moveFlag = true;
 
 void Barrel::Move(Input* input)
 {
+<<<<<<< HEAD
 	StraightMove(posA, posB);
+=======
+	XMFLOAT3 leftPos = { 0.0f, 0.0f, 0.0f };
+	XMFLOAT3 RightPos = { 125.0f, 0.0f, 0.0f };
+	HorizontalMove(leftPos, RightPos);
+>>>>>>> kuri
 }
 
 void Barrel::StraightMove(const XMFLOAT3& leftPos, const XMFLOAT3& rightPos)
@@ -56,7 +72,7 @@ void Barrel::Injection(Input* input)
 	if (input->PushKey(DIK_SPACE) && barrelIndividualInFlag == true)
 	{
 		//どれだけ飛ばすか
-		XMFLOAT3 InjectionMove = { pos.x, 30.0f, pos.z };
+		XMFLOAT3 InjectionMove = { pos.x, 20.0f, pos.z };
 		Player::AddInjectionMove(InjectionMove);
 		barrelInFlag = false;
 		barrelIndividualInFlag = false;
@@ -89,12 +105,23 @@ void Barrel::CollisionPlayer()
 
 Barrel* Barrel::Initialize(const XMFLOAT3& position, const XMFLOAT3& posA, const XMFLOAT3& posB)
 {
+<<<<<<< HEAD
 	Barrel* barrel = new Barrel();
 	barrel->posA = posA;
 	barrel->posB = posB;
 	barrel->pos = position;
 	barrel->targetPos = posA;
 	return barrel;
+=======
+	//オブジェクト生成
+	model = Model::LoadFromOBJ("block");
+
+	objectX = Object3d::Create();
+
+	//オブジェクトにモデルをひも付ける
+	objectX->SetModel(model);
+	objectX->SetScale(scale);
+>>>>>>> kuri
 }
 
 void Barrel::Update(Input* input)
