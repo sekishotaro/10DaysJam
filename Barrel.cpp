@@ -14,7 +14,7 @@ bool Barrel::moveFlag = true;
 
 void Barrel::Move(Input* input)
 {
-	XMFLOAT3 leftPos = { 5.0f, 0.0f, 0.0f };
+	XMFLOAT3 leftPos = { 0.0f, 0.0f, 0.0f };
 	XMFLOAT3 RightPos = { 125.0f, 0.0f, 0.0f };
 	HorizontalMove(leftPos, RightPos);
 }
@@ -60,7 +60,7 @@ void Barrel::Injection(Input* input)
 	if (input->PushKey(DIK_SPACE))
 	{
 		//‚Ç‚ê‚¾‚¯”ò‚Î‚·‚©
-		XMFLOAT3 InjectionMove = { pos.x, 30.0f, pos.z };
+		XMFLOAT3 InjectionMove = { pos.x, 20.0f, pos.z };
 		Player::AddInjectionMove(InjectionMove);
 		barrelInFlag = false;
 		Player::BarrelOut();

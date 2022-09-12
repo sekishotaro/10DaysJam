@@ -82,29 +82,16 @@ void GamePlayScene::Update()
 	}
 
 	// マップチップ当たり判定
-	//if (MapCollide(player->GetPos(), p_radius_x, p_radius_y, 0, old_p_pos))
-	//{
-
-	//}
-
-
-	if (input->PushKey(DIK_W) || input->PushKey(DIK_S) || input->PushKey(DIK_D) || input->PushKey(DIK_A))
+	if (MapCollide(p_pos, p_radius_x, p_radius_y, 0, old_p_pos))
 	{
-		// 現在の座標を取得
-		XMFLOAT3 position = camera->GetEye();
-
-		DebugText::GetInstance()->Print(50, 30 * 1, 2, "%f", camera->GetEye().x);
-		DebugText::GetInstance()->Print(50, 30 * 2, 2, "%f", camera->GetEye().y);
+		DebugText::GetInstance()->Print(50, 30 * 3, 2, "ObjectHit");
 	}
 
-	//if (input->TriggerKey(DIK_SPACE))
-	//{
-	//	p_pos = { map_max_x / 2 * LAND_SCALE,  -map_max_y / 2 * LAND_SCALE, 0 };
-	//}
-
 	// 座標の変更を反映
-	camera->SetEye({ p_pos.x, p_pos.y + 3.0f, p_pos.z - 100.0f });
-	camera->SetTarget(p_pos);
+	camera->SetEye({ map_max_x / 2 * LAND_SCALE, -map_max_y / 2 * LAND_SCALE + 3.0f, -100.0f });
+	DebugText::GetInstance()->Print(50, 30 * 1, 2, "%f", p_pos.x);
+	DebugText::GetInstance()->Print(50, 30 * 2, 2, "%f", p_pos.y);
+	camera->SetTarget({ map_max_x / 2 * LAND_SCALE, -map_max_y / 2 * LAND_SCALE, 0 });
 	Barrel::CollisionPlayer();
 	//アップデート
 	camera->Update();
