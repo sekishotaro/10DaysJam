@@ -7,11 +7,7 @@
 //マップのサイズ(基本は1)
 const int map_size = 1;
 //縦横の最大数(マップによって変更)
-<<<<<<< HEAD
-const int map_max_x = 104, map_max_y = 18;
-=======
 const int map_max_x = 25, map_max_y = 14;
->>>>>>> kuri
 
 class Mapchip
 {

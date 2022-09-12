@@ -24,7 +24,6 @@ void GamePlayScene::Initialize()
 	// 背景スプライト生成
 	spriteBG = Sprite::Create(1, { 0.0f,0.0f });
 
-<<<<<<< HEAD
 	//オブジェクト生成
 	BarrelModel = Model::LoadFromOBJ("block");
 
@@ -37,7 +36,6 @@ void GamePlayScene::Initialize()
 
 	barrelObject2->SetModel(BarrelModel);
 	barrelObject2->SetScale({ 0.5f, 0.5f, 0.5f });
-=======
 	// オブジェクト生成
 	item = Model::LoadFromOBJ("block");
 
@@ -56,20 +54,18 @@ void GamePlayScene::Initialize()
 			objItem[y][x]->SetPosition({ 1000.0f,1000.0f,0.0f });
 		}
 	}
->>>>>>> kuri
-
 	Player::Initialize();
 
 
-	XMFLOAT3 posA = { -50.0f, -15.0f, 0.0f };
-	XMFLOAT3 posB = {  50.0f, -15.0f, 0.0f };
+	XMFLOAT3 posA = { 0.0f, -65.0f, 0.0f };
+	XMFLOAT3 posB = { 125.0f, -65.0f, 0.0f };
 
-	XMFLOAT3 posC = { -50.0f, -25.0f, 0.0f };
-	XMFLOAT3 posD = {  50.0f, -25.0f, 0.0f };
+	XMFLOAT3 posC = { 0.0f, -75.0f, 0.0f };
+	XMFLOAT3 posD = { 125.0f, -75.0f, 0.0f };
 
-	barrel1 = Barrel::Initialize(XMFLOAT3(0.0f, -15.0f, 0.0f), posA, posB);
+	barrel1 = Barrel::Initialize(XMFLOAT3(0.0f, -65.0f, 0.0f), posA, posB);
 	
-	barrel2 = Barrel::Initialize(XMFLOAT3(0.0f, -25.0f, 0.0f), posC, posD);
+	barrel2 = Barrel::Initialize(XMFLOAT3(0.0f, -75.0f, 0.0f), posC, posD);
 
 	barrelObject1->SetPosition(barrel1->GetPos());
 	barrelObject2->SetPosition(barrel2->GetPos());
@@ -84,8 +80,6 @@ void GamePlayScene::Finalize()
 void GamePlayScene::Update()
 {
 	// ゲームシーンの毎フレーム処理
-	
-<<<<<<< HEAD
 	Input *input = Input::GetInstance();
 
 	if (input->PushKey(DIK_W) || input->PushKey(DIK_S) || input->PushKey(DIK_D) || input->PushKey(DIK_A))
@@ -108,8 +102,6 @@ void GamePlayScene::Update()
 
 	barrel1->CollisionPlayer();
 	barrel2->CollisionPlayer();
-=======
-	Input* input = Input::GetInstance();
 
 	// 座標更新
 	p_pos = Player::GetPos();
@@ -136,27 +128,25 @@ void GamePlayScene::Update()
 	}
 
 	// 座標の変更を反映
-	camera->SetEye({ map_max_x / 2 * LAND_SCALE, -map_max_y / 2 * LAND_SCALE + 3.0f, -100.0f });
+	camera->SetEye({ map_max_x / 2 * LAND_SCALE, -map_max_y / 2 * LAND_SCALE + 3.0f, -100.0f });/*
 	DebugText::GetInstance()->Print(50, 30 * 1, 2, "%f", p_pos.x);
-	DebugText::GetInstance()->Print(50, 30 * 2, 2, "%f", p_pos.y);
+	DebugText::GetInstance()->Print(50, 30 * 2, 2, "%f", p_pos.y);*/
 	camera->SetTarget({ map_max_x / 2 * LAND_SCALE, -map_max_y / 2 * LAND_SCALE, 0 });
-	Barrel::CollisionPlayer();
->>>>>>> kuri
+
+	barrel1->CollisionPlayer();
+	barrel2->CollisionPlayer();
+
 	//アップデート
 	camera->Update();
 	barrel1->Update(input);
 	barrel2->Update(input);
 	Player::Update(input);
-<<<<<<< HEAD
 
 	barrelObject1->SetPosition(barrel1->GetPos());
 	barrelObject1->Update();
 
 	barrelObject2->SetPosition(barrel2->GetPos());
 	barrelObject2->Update();
-	
-=======
->>>>>>> kuri
 }
 
 void GamePlayScene::Draw()
@@ -184,11 +174,8 @@ void GamePlayScene::Draw()
 	Object3d::PreDraw(cmdList);
 
 	// 3Dオブクジェクトの描画
-<<<<<<< HEAD
 	barrelObject1->Draw();
 	barrelObject2->Draw();
-=======
-	//objectX->Draw();
 
 	//マップチップの描画
 	for (int y = 0; y < map_max_y; y++)
@@ -198,7 +185,6 @@ void GamePlayScene::Draw()
 			objItem[y][x]->Draw();
 		}
 	}
->>>>>>> kuri
 
 	/// <summary>
 	/// ここに3Dオブジェクトの描画処理を追加できる
@@ -218,8 +204,6 @@ void GamePlayScene::Draw()
 	// スプライト描画後処理
 	Sprite::PostDraw();
 }
-<<<<<<< HEAD
-=======
 
 void GamePlayScene::MapCreate(int mapNumber)
 {
@@ -336,4 +320,3 @@ int GamePlayScene::GetUpMapChip(XMFLOAT3 position)
 	int chip = Mapchip::GetChipNum(static_cast<int>((position.x + LAND_SCALE / 2) / LAND_SCALE), -static_cast<int>((position.y - LAND_SCALE / 2) / LAND_SCALE + 1), map[0]);
 	return chip;
 }
->>>>>>> kuri

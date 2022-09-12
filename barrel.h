@@ -12,8 +12,6 @@ enum MovePattern
 	obliwue,		//斜め
 };
 
-
-
 class Barrel
 {
 private: // エイリアス
@@ -76,7 +74,6 @@ public:
 	void CollisionPlayer();
 
 private:
-<<<<<<< HEAD
 	XMFLOAT3 pos = { 0,0,0 };
 	XMFLOAT3 posA = { -50.0f, 0.0f, 0.0f };
 	XMFLOAT3 posB = { 50.0f, 0.0f, 0.0f };
@@ -85,13 +82,6 @@ private:
 	XMFLOAT3 targetPos = { 0,0,0 };
 
 	bool barrelIndividualInFlag = false;
-=======
-	static std::unique_ptr<Object3d> objectX;
-	static Model* model;
-	static XMFLOAT3 pos;
-	static XMFLOAT3 move;
-	static XMFLOAT3 scale;
->>>>>>> kuri
 
 	static bool barrelInFlag;
 	static bool moveFlag;

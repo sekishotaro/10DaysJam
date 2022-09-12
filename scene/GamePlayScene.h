@@ -10,6 +10,7 @@
 #include "Camera.h"
 
 #include "Barrel.h"
+#include <Mapchip.h>
 
 class GamePlayScene : public BaseScene
 {
@@ -44,9 +45,6 @@ public:
 	/// </summary>
 	void Draw() override;
 
-<<<<<<< HEAD
-
-=======
 	// マップチップ生成
 	void MapCreate(int mapNumber);
 	// マップチップ当たり判定
@@ -73,7 +71,6 @@ public:
 	// マップ番号
 	int height;
 	int width;
->>>>>>> kuri
 
 	/// <summary>
 	/// ゲームシーン用
@@ -81,21 +78,18 @@ public:
 	Sprite *spriteBG = nullptr;
 	Camera *camera = nullptr;
 
-<<<<<<< HEAD
+	// バレル
 	std::unique_ptr<Object3d> barrelObject1;
 	std::unique_ptr<Object3d> barrelObject2;
 	Model* BarrelModel;
-=======
+
 	// プレイヤー変数
 	XMFLOAT3 p_pos;
 	XMFLOAT3 old_p_pos;
 	float p_radius_x;
 	float p_radius_y;
->>>>>>> kuri
 
 	Barrel* barrel1;
 	Barrel* barrel2;
-	/*Barrel* barrel1 = nullptr;
-	Barrel* barrel2 = nullptr;*/
 };
 
