@@ -73,6 +73,7 @@ private:
 	static Model* model;
 	static XMFLOAT3 pos;
 	static XMFLOAT3 move;
+	static XMFLOAT3 scale;
 
 	static bool barrelInFlag;
 	static bool moveFlag;

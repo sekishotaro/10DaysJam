@@ -5,16 +5,17 @@
 std::unique_ptr<Object3d> Barrel::objectX;
 Model* Barrel::model = nullptr;
 
-Barrel::XMFLOAT3 Barrel::pos = { 0.0f, -25.0f, 0.0f };
+Barrel::XMFLOAT3 Barrel::pos = { 0.0f, -65.0f, 0.0f };
 Barrel::XMFLOAT3 Barrel::move = { 1.0f ,0.0f, 0.0f };
+Barrel::XMFLOAT3 Barrel::scale = { 1.0f, 1.0f, 1.0f };
 
 bool Barrel::barrelInFlag = false;
 bool Barrel::moveFlag = true;
 
 void Barrel::Move(Input* input)
 {
-	XMFLOAT3 leftPos = { -50.0f, 0.0f, 0.0f };
-	XMFLOAT3 RightPos = { 50.0f, 0.0f, 0.0f };
+	XMFLOAT3 leftPos = { 5.0f, 0.0f, 0.0f };
+	XMFLOAT3 RightPos = { 125.0f, 0.0f, 0.0f };
 	HorizontalMove(leftPos, RightPos);
 }
 
@@ -97,7 +98,7 @@ void Barrel::Initialize()
 
 	//オブジェクトにモデルをひも付ける
 	objectX->SetModel(model);
-	objectX->SetScale({ 0.5f, 0.5f, 0.5f });
+	objectX->SetScale(scale);
 }
 
 void Barrel::Update(Input* input)

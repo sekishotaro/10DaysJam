@@ -45,8 +45,11 @@ public:
 	/// </summary>
 	void Draw() override;
 
-	// マップチップ用
+	// マップチップ生成
 	void MapCreate(int mapNumber);
+	// マップチップ当たり判定
+	bool MapCollide(XMFLOAT3& pos, float radiusX, float radiusY, int mapNumber, const XMFLOAT3 old_pos);
+	// 位置取得
 	int GetLeftMapChip(XMFLOAT3 position);
 	int GetRightMapChip(XMFLOAT3 position);
 	int GetUpMapChip(XMFLOAT3 position);
@@ -70,12 +73,13 @@ public:
 	/// ゲームシーン用
 	/// </summary>
 	Sprite *spriteBG = nullptr;
-	//std::unique_ptr<Object3d> objectX;
-	//Model *model = nullptr;
 	Camera *camera = nullptr;
 
 	// プレイヤー変数
 	XMFLOAT3 p_pos;
+	XMFLOAT3 old_p_pos;
+	float p_radius_x;
+	float p_radius_y;
 
 	// カメラ変数
 	XMFLOAT3 c_pos;

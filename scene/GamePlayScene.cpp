@@ -48,6 +48,10 @@ void GamePlayScene::Initialize()
 
 	Player::Initialize();
 	Barrel::Initialize();
+
+	// 半径取得
+	//p_radius_x = 0.5f * Player::GetScale().x;
+	//p_radius_y = 0.5f * Player::GetScale().y;
 }
 
 void GamePlayScene::Finalize()
@@ -63,6 +67,10 @@ void GamePlayScene::Update()
 	
 	Input* input = Input::GetInstance();
 
+	// 座標更新
+	p_pos = Player::GetPos();
+	old_p_pos = p_pos;
+
 	// マップチップ生成
 	MapCreate(0);
 	for (int y = 0; y < map_max_y; y++)
@@ -72,6 +80,12 @@ void GamePlayScene::Update()
 			objBlock[y][x]->Update();
 		}
 	}
+
+	// マップチップ当たり判定
+	//if (MapCollide(player->GetPos(), p_radius_x, p_radius_y, 0, old_p_pos))
+	//{
+
+	//}
 
 
 	if (input->PushKey(DIK_W) || input->PushKey(DIK_S) || input->PushKey(DIK_D) || input->PushKey(DIK_A))
@@ -83,10 +97,10 @@ void GamePlayScene::Update()
 		DebugText::GetInstance()->Print(50, 30 * 2, 2, "%f", camera->GetEye().y);
 	}
 
-	if (input->TriggerKey(DIK_SPACE))
-	{
-		p_pos = { map_max_x / 2 * LAND_SCALE,  -map_max_y / 2 * LAND_SCALE, 0 };
-	}
+	//if (input->TriggerKey(DIK_SPACE))
+	//{
+	//	p_pos = { map_max_x / 2 * LAND_SCALE,  -map_max_y / 2 * LAND_SCALE, 0 };
+	//}
 
 	// 座標の変更を反映
 	camera->SetEye({ p_pos.x, p_pos.y + 3.0f, p_pos.z - 100.0f });
@@ -96,7 +110,6 @@ void GamePlayScene::Update()
 	camera->Update();
 	Barrel::Update(input);
 	Player::Update(input);
-	
 }
 
 void GamePlayScene::Draw()
@@ -172,6 +185,77 @@ void GamePlayScene::MapCreate(int mapNumber)
 			}
 		}
 	}
+}
+
+bool GamePlayScene::MapCollide(XMFLOAT3& pos, float radiusX, float radiusY, int mapNumber, const XMFLOAT3 old_pos)
+{
+	//マップチップ
+	//X, Y
+	float x = 0;
+	float y = 0;
+	//Radius
+	float r_x = 0;
+	float r_y = 0;
+
+	//フラグ
+	bool is_hit = false;
+
+	//判定
+	int max_x = static_cast<int>((pos.x + radiusX + LAND_SCALE / 2) / LAND_SCALE);
+	int min_x = static_cast<int>((pos.x - radiusX + LAND_SCALE / 2) / LAND_SCALE);
+	int max_y = -static_cast<int>((pos.y - radiusY + LAND_SCALE / 2) / LAND_SCALE - 1);
+	int min_y = -static_cast<int>((pos.y + radiusY + LAND_SCALE / 2) / LAND_SCALE - 1);
+
+	for (int h = min_y; h <= max_y; h++)
+	{
+		if (h < 0)
+		{
+			continue;
+		}
+		for (int w = min_x; w <= max_x; w++)
+		{
+			if (w < 0)
+			{
+				continue;
+			}
+			if (Mapchip::GetChipNum(w, h, map[mapNumber]) == Coin)
+			{
+				x = objBlock[h][w]->GetPosition().x;
+				y = objBlock[h][w]->GetPosition().y;
+				r_x = 2.5f * objBlock[h][w]->GetScale().x;
+				r_y = 2.5f * objBlock[h][w]->GetScale().y;
+
+				if (pos.x <= x + r_x && x - r_x <= pos.x)
+				{
+					if (y + r_y + radiusY > pos.y && y < old_pos.y)
+					{
+						pos.y = y + r_y + radiusY;
+						is_hit = true;
+					}
+					else if (y - r_y - radiusY < pos.y && y > old_pos.y)
+					{
+						pos.y = y - r_y - radiusY;
+						is_hit = true;
+					}
+				}
+				if (pos.y <= y + r_y && y - r_y <= pos.y)
+				{
+					if (x + r_x + radiusX > pos.x && x < old_pos.x)
+					{
+						pos.x = x + r_x + radiusX;
+						is_hit = true;
+					}
+					else if (x - r_x - radiusX < pos.x && x > old_pos.x)
+					{
+						pos.x = x - r_x - radiusX;
+						is_hit = true;
+					}
+				}
+			}
+		}
+	}
+
+	return is_hit;
 }
 
 int GamePlayScene::GetLeftMapChip(XMFLOAT3 position)
