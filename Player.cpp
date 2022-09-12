@@ -41,8 +41,8 @@ void Player::Move(Input *input)
 		// ˆÚ“®Œã‚ÌÀ•W‚ðŒvŽZ
 		//if (input->PushKey(DIK_UP)) { move.y += 1.0f; }
 		//else if (input->PushKey(DIK_DOWN)) { move.y -= 1.0f; }
-		if (input->PushKey(DIK_RIGHT)) { move.x -= 1.0f; }
-		else if (input->PushKey(DIK_LEFT)) { move.x += 1.0f; }
+		if (input->PushKey(DIK_RIGHT)) { move.x += 1.0f; }
+		else if (input->PushKey(DIK_LEFT)) { move.x -= 1.0f; }
 	}
 
 	//Ž©‹@‚ÌˆÊ’u‚ÉˆÚ“®—Ê‚ð‰ÁŽZ
