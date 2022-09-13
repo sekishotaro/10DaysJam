@@ -127,7 +127,7 @@ void DirectXCommon::ClearRenderTarget()
 	CD3DX12_CPU_DESCRIPTOR_HANDLE rtvH = CD3DX12_CPU_DESCRIPTOR_HANDLE(rtvHeaps->GetCPUDescriptorHandleForHeapStart(), bbIndex, dev->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_RTV));
 
 	//画面クリア            R     G      B    A
-	float clearColor[] = { 0.1f, 0.25f, 0.5f, 0.0f }; //画面を塗りつぶす色
+	float clearColor[] = { 0.0f, 0.0f, 0.0f, 0.0f }; //画面を塗りつぶす色
 	//レンダーターゲットクリア
 	cmdList->ClearRenderTargetView(rtvH, clearColor, 0, nullptr);
 }

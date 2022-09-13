@@ -123,6 +123,8 @@ void Player::Update(Input* input)
 	//自機の移動
 	Move(input);
 
+	if (input->PushKey(DIK_P)) { pos.y = 50.0f; }
+
 
 	//オブジェクトの更新
 	objectX->SetPosition(pos);

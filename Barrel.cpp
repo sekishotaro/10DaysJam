@@ -1,6 +1,7 @@
 #include "Barrel.h"
 #include "Player.h"
 #include "Collision.h"
+#include "Math.h"
 
 bool Barrel::barrelInFlag = false;
 bool Barrel::moveFlag = true;
@@ -18,11 +19,11 @@ void Barrel::StraightMove(const XMFLOAT3& leftPos, const XMFLOAT3& rightPos)
 		return;
 	}
 
-	if (pos.x == rightPos.x)
+	if (pos.x >= rightPos.x && pos.y >= rightPos.y && pos.z >= rightPos.z)
 	{
 		targetPos = leftPos;
 	}
-	else if (pos.x == leftPos.x)
+	else if (pos.x <= leftPos.x && pos.y <= leftPos.y && pos.z <= leftPos.z)
 	{
 		targetPos = rightPos;
 	}
@@ -56,7 +57,19 @@ void Barrel::Injection(Input* input)
 	if (input->PushKey(DIK_SPACE) && barrelIndividualInFlag == true)
 	{
 		//‚Ç‚ê‚¾‚¯”ò‚Î‚·‚©
-		XMFLOAT3 InjectionMove = { pos.x, 30.0f, pos.z };
+		XMFLOAT3 vec1 = {0.0f, injectionDis, 0.0f};
+
+
+		float a =  cos(rot.z);
+		float b = -sin(rot.z);
+		float c =  sin(rot.z);
+		float d =  cos(rot.z);
+
+		float x = a * vec1.x + b * vec1.y;
+		float y = c * vec1.x + d * vec1.y;
+
+
+		XMFLOAT3 InjectionMove = { x + pos.x, y, pos.z };
 		Player::AddInjectionMove(InjectionMove);
 		barrelInFlag = false;
 		barrelIndividualInFlag = false;
@@ -87,13 +100,15 @@ void Barrel::CollisionPlayer()
 	}
 }
 
-Barrel* Barrel::Initialize(const XMFLOAT3& position, const XMFLOAT3& posA, const XMFLOAT3& posB)
+Barrel* Barrel::Initialize(const XMFLOAT3& position, const XMFLOAT3& posA, const XMFLOAT3& posB, const XMFLOAT3& rot, const float& injectionDis)
 {
 	Barrel* barrel = new Barrel();
 	barrel->posA = posA;
 	barrel->posB = posB;
 	barrel->pos = position;
 	barrel->targetPos = posA;
+	barrel->rot = rot;
+	barrel->injectionDis = injectionDis;
 	return barrel;
 }
 

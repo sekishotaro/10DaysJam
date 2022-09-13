@@ -58,7 +58,5 @@ public:
 
 	Barrel* barrel1;
 	Barrel* barrel2;
-	/*Barrel* barrel1 = nullptr;
-	Barrel* barrel2 = nullptr;*/
 };
 
