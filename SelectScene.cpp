@@ -26,7 +26,7 @@ void SelectScene::Update()
 	if (input->TriggerKey(DIK_SPACE))
 	{
 		//ƒV[ƒ“Ø‚è‘Ö‚¦
-		SceneManager::GetInstance()->ChangeScene("GAMEPLAY");
+		SceneManager::GetInstance()->ChangeScene("STAGE_1");
 	}
 	DebugText::GetInstance()->Print(50, 20, 3, "select");
 }

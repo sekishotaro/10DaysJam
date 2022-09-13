@@ -34,5 +34,7 @@ public: // メンバ関数
 private: // メンバ変数
 //スプライト
 	std::unique_ptr<Sprite> sprite;
+
+	Sprite* spriteBG = nullptr;
 };
 
