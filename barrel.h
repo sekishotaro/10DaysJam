@@ -54,7 +54,7 @@ public:
 	/// <summary>
 	/// èâä˙âª
 	/// </summary>
-	static Barrel* Initialize(const XMFLOAT3& position, const XMFLOAT3& posA, const XMFLOAT3& posB);
+	static Barrel* Initialize(const XMFLOAT3& position, const XMFLOAT3& posA, const XMFLOAT3& posB, const XMFLOAT3& rot, const float& injectionDis);
 
 	// <summary>
 	// çXêV
@@ -78,10 +78,12 @@ private:
 	XMFLOAT3 posA = { -50.0f, 0.0f, 0.0f };
 	XMFLOAT3 posB = { 50.0f, 0.0f, 0.0f };
 	XMFLOAT3 move = { 0,0,0 };
+	XMFLOAT3 rot = { 0.0f, 0.0f, 0.0f };
 
 	XMFLOAT3 targetPos = { 0,0,0 };
 
 	bool barrelIndividualInFlag = false;
+	float injectionDis = 30.0f;
 
 	static bool barrelInFlag;
 	static bool moveFlag;

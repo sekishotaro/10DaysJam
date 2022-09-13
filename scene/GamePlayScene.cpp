@@ -20,12 +20,12 @@ void GamePlayScene::Initialize()
 
 	// テクスチャ読み込み
 
-	Sprite::LoadTexture(1, L"Resources/background.png");
+	Sprite::LoadTexture(1, L"Resources/BG.png");
 	// 背景スプライト生成
 	spriteBG = Sprite::Create(1, { 0.0f,0.0f });
 
 	//オブジェクト生成
-	BarrelModel = Model::LoadFromOBJ("block");
+	BarrelModel = Model::LoadFromOBJ("Cannon");
 
 	barrelObject1 = Object3d::Create();
 	barrelObject2 = Object3d::Create();
@@ -63,12 +63,18 @@ void GamePlayScene::Initialize()
 	XMFLOAT3 posC = { 0.0f, -75.0f, 0.0f };
 	XMFLOAT3 posD = { 125.0f, -75.0f, 0.0f };
 
-	barrel1 = Barrel::Initialize(XMFLOAT3(0.0f, -65.0f, 0.0f), posA, posB);
+	XMFLOAT3 rot = { 0.0f ,0.0f ,0.0f };
+
+	barrel1 = Barrel::Initialize(XMFLOAT3(0.0f, -15.0f, 0.0f), posA, posB, rot, 30.0f);
 	
-	barrel2 = Barrel::Initialize(XMFLOAT3(0.0f, -75.0f, 0.0f), posC, posD);
+	barrel2 = Barrel::Initialize(XMFLOAT3(0.0f, -25.0f, 0.0f), posC, posD, rot, 30.0f);
 
 	barrelObject1->SetPosition(barrel1->GetPos());
 	barrelObject2->SetPosition(barrel2->GetPos());
+	barrelObject1->SetScale(XMFLOAT3(4.0f, 4.0f, 4.0f));
+	barrelObject1->SetRotation(rot);
+	barrelObject2->SetRotation(rot);
+
 }
 
 void GamePlayScene::Finalize()
@@ -97,8 +103,8 @@ void GamePlayScene::Update()
 		camera->SetEye(position);
 	}
 
-	DebugText::GetInstance()->Print(50, 30 * 1, 2, "%f", barrel1->GetPos().y);
-	DebugText::GetInstance()->Print(50, 30 * 2, 2, "%f", barrel2->GetPos().y);
+	DebugText::GetInstance()->Print(50, 30 * 1, 2, "%f", barrel1->GetPos().x);
+	DebugText::GetInstance()->Print(50, 30 * 2, 2, "%f", barrel1->GetPos().y);
 
 	barrel1->CollisionPlayer();
 	barrel2->CollisionPlayer();
@@ -175,7 +181,7 @@ void GamePlayScene::Draw()
 
 	// 3Dオブクジェクトの描画
 	barrelObject1->Draw();
-	barrelObject2->Draw();
+	//barrelObject2->Draw();
 
 	//マップチップの描画
 	for (int y = 0; y < map_max_y; y++)
