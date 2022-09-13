@@ -5,6 +5,10 @@
 #include "Object3d.h"
 #include "Input.h"
 
+#include <vector>
+
+using namespace std;
+
 enum MovePattern
 {
 	horizontal,		//横
@@ -64,6 +68,8 @@ public:
 
 	const XMFLOAT3& GetPos() { return pos; }
 
+	const XMFLOAT3& GetRot() { return rot; }
+
 	/// <summary>
 	/// 位置情報のセット
 	/// </summary>
@@ -73,14 +79,20 @@ public:
 	//自機との衝突確認
 	void CollisionPlayer();
 
+	void rotationMove(vector<int> rota);
+
 private:
 	XMFLOAT3 pos = { 0,0,0 };
 	XMFLOAT3 posA = { -50.0f, 0.0f, 0.0f };
 	XMFLOAT3 posB = { 50.0f, 0.0f, 0.0f };
 	XMFLOAT3 move = { 0,0,0 };
 	XMFLOAT3 rot = { 0.0f, 0.0f, 0.0f };
-
 	XMFLOAT3 targetPos = { 0,0,0 };
+
+	float Num = 0;
+	float addNum = 1;
+
+	float time = 0.0f;
 
 	bool barrelIndividualInFlag = false;
 	float injectionDis = 30.0f;

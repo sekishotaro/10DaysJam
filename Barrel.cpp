@@ -57,22 +57,23 @@ void Barrel::Injection(Input* input)
 	if (input->PushKey(DIK_SPACE) && barrelIndividualInFlag == true)
 	{
 		//‚Ç‚ê‚¾‚¯”ò‚Î‚·‚©
-		XMFLOAT3 vec1 = {0.0f, injectionDis, 0.0f};
+		XMFLOAT3 vec1 = { 0.0f, injectionDis, 0.0f};
 
 
-		float a =  cos(rot.z);
-		float b = -sin(rot.z);
-		float c =  sin(rot.z);
-		float d =  cos(rot.z);
+		float a =  cos(rot.z * (3.14f / 180.0f));
+		float b = -sin(rot.z * (3.14f / 180.0f));
+		float c =  sin(rot.z * (3.14f / 180.0f));
+		float d =  cos(rot.z * (3.14f / 180.0f));
 
-		float x = a * vec1.x + b * vec1.y;
-		float y = c * vec1.x + d * vec1.y;
+		float x = (a * vec1.x + b * vec1.y) * -1;
+		float y = (c * vec1.x + d * vec1.y);
 
 
-		XMFLOAT3 InjectionMove = { x + pos.x, y, pos.z };
-		Player::AddInjectionMove(InjectionMove);
+		XMFLOAT3 InjectionMove = { pos.x + x, pos.y + y, pos.z };
+   		Player::AddInjectionMove(InjectionMove);
 		barrelInFlag = false;
 		barrelIndividualInFlag = false;
+		time = 0.0f;
 		Player::BarrelOut();
 	}
 }
@@ -98,6 +99,38 @@ void Barrel::CollisionPlayer()
 		Player::GravityForcedEnd();
 		Player::BarrelIn();
 	}
+}
+
+void Barrel::rotationMove(vector<int> rota)
+{
+	if (barrelInFlag == false) return;
+
+	time += 0.1f;
+
+	if (time <= 6.0f) return;
+
+	for (int i = 0; i < rota.size(); i++)
+	{
+		if (Num == i)
+		{
+			rot.z = rota[i];
+		}
+	}
+
+	if (Num == 0)
+	{
+		addNum = 1;
+	}
+
+	if (Num == rota.size() - 1)
+	{
+		addNum = -1;
+	}
+
+	Num += addNum;
+
+	time = 0.0f;
+
 }
 
 Barrel* Barrel::Initialize(const XMFLOAT3& position, const XMFLOAT3& posA, const XMFLOAT3& posB, const XMFLOAT3& rot, const float& injectionDis)

@@ -4,13 +4,15 @@
 #include "Sprite.h"
 #include "Object3d.h"
 #include <DirectXMath.h>
-
+#include <vector>
 #include <memory>
 
 #include "Camera.h"
 
 #include "Barrel.h"
 #include <Mapchip.h>
+
+using namespace std;
 
 class GamePlayScene : public BaseScene
 {
@@ -80,7 +82,6 @@ public:
 
 	// バレル
 	std::unique_ptr<Object3d> barrelObject1;
-	std::unique_ptr<Object3d> barrelObject2;
 	Model* BarrelModel;
 
 	// プレイヤー変数
@@ -90,6 +91,6 @@ public:
 	float p_radius_y;
 
 	Barrel* barrel1;
-	Barrel* barrel2;
+	vector<int> rotation;
 };
 
