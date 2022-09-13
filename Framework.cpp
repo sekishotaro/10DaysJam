@@ -31,7 +31,7 @@ void Framework::Initialize()
 	DebugText::GetInstance()->Initialize(debugTextTexNumber);
 	
 	//fonttext
-	Sprite::LoadTexture(fontTextTexnumber, L"Resources/ASCII.png");
+	Sprite::LoadTexture(fontTextTexnumber, L"Resources/fornt.png");
 	Fornt::GetInstance()->Initialize(fontTextTexnumber);
 	camera = new Camera(WinApp::window_width, WinApp::window_height);
 
