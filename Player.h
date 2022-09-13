@@ -46,7 +46,7 @@ public:
 	/// <summary>
 	/// ‰Šú‰»
 	/// </summary>
-	static void  Initialize();
+	static void  Initialize(const XMFLOAT3& posision);
 
 	/// <summary>
 	/// XV

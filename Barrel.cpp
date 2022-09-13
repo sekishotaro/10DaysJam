@@ -59,7 +59,6 @@ void Barrel::Injection(Input* input)
 		//‚Ç‚ê‚¾‚¯”ò‚Î‚·‚©
 		XMFLOAT3 vec1 = {0.0f, injectionDis, 0.0f};
 
-
 		float a =  cos(rot.z);
 		float b = -sin(rot.z);
 		float c =  sin(rot.z);

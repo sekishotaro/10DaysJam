@@ -23,10 +23,20 @@ void SelectScene::Update()
 
 	Input* input = Input::GetInstance();
 
-	if (input->TriggerKey(DIK_SPACE))
+	if (input->TriggerKey(DIK_1))
 	{
 		//シーン切り替え
 		SceneManager::GetInstance()->ChangeScene("STAGE_1");
+	}
+	if (input->TriggerKey(DIK_2))
+	{
+		//シーン切り替え
+		SceneManager::GetInstance()->ChangeScene("STAGE_2");
+	}
+	if (input->TriggerKey(DIK_3))
+	{
+		//シーン切り替え
+		SceneManager::GetInstance()->ChangeScene("STAGE_3");
 	}
 	DebugText::GetInstance()->Print(50, 20, 3, "select");
 }

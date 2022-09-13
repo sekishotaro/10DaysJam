@@ -4,7 +4,7 @@
 std::unique_ptr<Object3d> Player::objectX;
 Model* Player::model = nullptr;
 
-Player::XMFLOAT3 Player::pos = { 60.0f, 55.0f, 0.0f };
+Player::XMFLOAT3 Player::pos = { 0.0f ,0.0f, 0.0f };
 Player::XMFLOAT3 Player::move = { 0.0f ,0.0f, 0.0f };
 Player::XMFLOAT3 Player::scale = { 2.0f ,2.0f, 2.0f };
 Player::XMFLOAT3 Player::barrelPos = { 0.0f, 0.0f, 0.0f };
@@ -17,7 +17,7 @@ float Player::graValue = 0.0f;
 bool Player::gravityFlag = false;
 float Player::time = 0.0f;
 
-void Player::Initialize()
+void Player::Initialize(const XMFLOAT3& position)
 {
 	//オブジェクト生成
 	model = Model::LoadFromOBJ("sphere");
@@ -26,6 +26,8 @@ void Player::Initialize()
 
 	//オブジェクトにモデルをひも付ける
 	objectX->SetModel(model);
+	objectX->SetPosition(position);
+	pos = position;
 	objectX->SetScale(scale);
 }
 
@@ -41,8 +43,8 @@ void Player::Move(Input *input)
 		// 移動後の座標を計算
 		//if (input->PushKey(DIK_UP)) { move.y += 1.0f; }
 		//else if (input->PushKey(DIK_DOWN)) { move.y -= 1.0f; }
-		if (input->PushKey(DIK_RIGHT)) { move.x += 1.0f; }
-		else if (input->PushKey(DIK_LEFT)) { move.x -= 1.0f; }
+		if (input->PushKey(DIK_RIGHT)) { move.x += 0.2f; }
+		else if (input->PushKey(DIK_LEFT)) { move.x -= 0.2f; }
 	}
 
 	//自機の位置に移動量を加算
@@ -70,7 +72,7 @@ void Player::Gravity(const bool& graflag)
 	}
 
 	gramove.y -= gravity * graValue / graAdjustConstant;
-	graValue += 0.1;
+	graValue += 0.1f;
 
 	//自機の位置に移動量を加算
 	AddPosMove(gramove);
@@ -106,7 +108,6 @@ void Player::InjectionAddMove()
 	AddPosMove(BPos);
 }
 
-
 void Player::Update(Input* input)
 {
 	
@@ -124,9 +125,6 @@ void Player::Update(Input* input)
 	Gravity(gravityFlag);
 	//自機の移動
 	Move(input);
-
-	if (input->PushKey(DIK_P)) { pos.y = 50.0f; }
-
 
 	//オブジェクトの更新
 	objectX->SetPosition(pos);

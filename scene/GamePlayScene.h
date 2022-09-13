@@ -4,13 +4,10 @@
 #include "Sprite.h"
 #include "Object3d.h"
 #include <DirectXMath.h>
-
-#include <memory>
-
+//#include <memory>
 #include "Camera.h"
-
 #include "Barrel.h"
-#include <Mapchip.h>
+#include "Mapchip.h"
 
 class GamePlayScene : public BaseScene
 {

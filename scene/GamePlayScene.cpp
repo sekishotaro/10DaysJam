@@ -1,11 +1,8 @@
 #include "GamePlayScene.h"
 #include "SceneManager.h"
 #include "Audio.h"
-
-
 #include "DebugText.h"
 #include "DirectXCommon.h"
-
 #include "PLayer.h"
 
 void GamePlayScene::Initialize()
@@ -55,7 +52,6 @@ void GamePlayScene::Initialize()
 			objItem[y][x]->SetPosition({ 1000.0f,1000.0f,0.0f });
 		}
 	}
-	Player::Initialize();
 
 
 	camera->SetEye({ 0.0f, 0.0f, -60.0f });
@@ -68,9 +64,7 @@ void GamePlayScene::Initialize()
 
 	XMFLOAT3 rot = { 0.0f ,0.0f ,0.0f };
 
-	barrel1 = Barrel::Initialize(XMFLOAT3( 60.0f, -55.0f, 0.0f), posA, posB, rot, 30.0f);
-	
-	barrel2 = Barrel::Initialize(XMFLOAT3(0.0f, -25.0f, 0.0f), posC, posD, rot, 30.0f);
+	barrel1 = Barrel::Initialize(XMFLOAT3( 60.0f, -65.0f, 0.0f), posA, posB, rot, 30.0f);
 
 	barrelObject1->SetPosition(barrel1->GetPos());
 	barrelObject2->SetPosition(barrel2->GetPos());
