@@ -26,14 +26,11 @@ void GamePlayScene::Initialize()
 	BarrelModel = Model::LoadFromOBJ("Cannon");
 
 	barrelObject1 = Object3d::Create();
-	barrelObject2 = Object3d::Create();
 
 	//オブジェクトにモデルをひも付ける
 	barrelObject1->SetModel(BarrelModel);
 	barrelObject1->SetScale({ 0.5f, 0.5f, 0.5f });
 
-	barrelObject2->SetModel(BarrelModel);
-	barrelObject2->SetScale({ 0.5f, 0.5f, 0.5f });
 	// オブジェクト生成
 	item = Model::LoadFromOBJ("block");
 
@@ -62,15 +59,16 @@ void GamePlayScene::Initialize()
 	XMFLOAT3 posC = { 0.0f, -75.0f, 0.0f };
 	XMFLOAT3 posD = { 125.0f, -75.0f, 0.0f };
 
-	XMFLOAT3 rot = { 0.0f ,0.0f ,0.0f };
+	//Z軸時計回り
+	XMFLOAT3 rot = { 0.0f , 180.0f , 45.0f };
 
-	barrel1 = Barrel::Initialize(XMFLOAT3( 60.0f, -65.0f, 0.0f), posA, posB, rot, 30.0f);
+	rotation = { 0, -45, -90 };
+
+	barrel1 = Barrel::Initialize(XMFLOAT3( 60.0f, -55.0f, 0.0f), posA, posB, rot, 70.0f);
 
 	barrelObject1->SetPosition(barrel1->GetPos());
-	barrelObject2->SetPosition(barrel2->GetPos());
 	barrelObject1->SetScale(XMFLOAT3(4.0f, 4.0f, 4.0f));
 	barrelObject1->SetRotation(rot);
-	barrelObject2->SetRotation(rot);
 
 }
 
@@ -82,6 +80,7 @@ void GamePlayScene::Finalize()
 
 void GamePlayScene::Update()
 {
+
 	// ゲームシーンの毎フレーム処理
 	Input *input = Input::GetInstance();
 
@@ -102,9 +101,10 @@ void GamePlayScene::Update()
 
 	DebugText::GetInstance()->Print(50, 30 * 1, 2, "%f", barrel1->GetPos().x);
 	DebugText::GetInstance()->Print(50, 30 * 2, 2, "%f", barrel1->GetPos().y);
+	DebugText::GetInstance()->Print(50, 30 * 3, 2, "%f", barrel1->GetRot().z);
+	DebugText::GetInstance()->Print(50, 30 * 4, 2, "%f", Player::GetPos().y);
 
 	barrel1->CollisionPlayer();
-	barrel2->CollisionPlayer();
 
 	// 座標更新
 	p_pos = Player::GetPos();
@@ -137,19 +137,16 @@ void GamePlayScene::Update()
 	camera->SetTarget({ map_max_x / 2 * LAND_SCALE, -map_max_y / 2 * LAND_SCALE, 0 });
 
 	barrel1->CollisionPlayer();
-	barrel2->CollisionPlayer();
 
+
+	barrel1->rotationMove(rotation);
 	//アップデート
 	camera->Update();
 	barrel1->Update(input);
-	barrel2->Update(input);
 	Player::Update(input);
-
 	barrelObject1->SetPosition(barrel1->GetPos());
+	barrelObject1->SetRotation(barrel1->GetRot());
 	barrelObject1->Update();
-
-	barrelObject2->SetPosition(barrel2->GetPos());
-	barrelObject2->Update();
 }
 
 void GamePlayScene::Draw()
@@ -178,7 +175,6 @@ void GamePlayScene::Draw()
 
 	// 3Dオブクジェクトの描画
 	barrelObject1->Draw();
-	//barrelObject2->Draw();
 
 	//マップチップの描画
 	for (int y = 0; y < map_max_y; y++)
