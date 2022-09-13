@@ -4,6 +4,7 @@
 #include "Sprite.h"
 #include "Object3d.h"
 #include <DirectXMath.h>
+#include "SceneChange.h"
 
 class TitleScene : public BaseScene
 {
@@ -46,4 +47,7 @@ public:
 	/// ゲームシーン用
 	/// </summary>
 	Sprite *spriteBG = nullptr;
+private:
+	SceneChange sceneChange;
+	bool isChange = false;
 };

@@ -4,7 +4,7 @@
 #include "Input.h"
 #include "Audio.h"
 #include "Camera.h"
-
+#include "SceneChange.h"
 #include "Sprite.h"
 class SelectScene:public BaseScene
 {
@@ -30,5 +30,8 @@ public: // ƒƒ“ƒoŠÖ”
 	
 	// •`‰æ
 	void Draw() override;
+private:
+	Sprite* spriteBG = nullptr;
+	SceneChange sceneChange;
 };
 

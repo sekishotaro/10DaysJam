@@ -6,12 +6,13 @@
 #include "DirectXCommon.h"
 #include "Fornt.h"
 
+
 void TitleScene::Initialize()
 {
 	// テクスチャ読み込み
-	Sprite::LoadTexture(1, L"Resources/Titlebackground.png");
+	Sprite::LoadTexture(20, L"Resources/title.png");
 	// 背景スプライト生成
-	spriteBG = Sprite::Create(1, { 0.0f,0.0f });
+	spriteBG = Sprite::Create(20, { 0.0f,0.0f });
 }
 
 void TitleScene::Finalize()
@@ -27,9 +28,15 @@ void TitleScene::Update()
 	if (input->TriggerKey(DIK_SPACE))
 	{
 		//シーン切り替え
-		SceneManager::GetInstance()->ChangeScene("SELECT");
+		//SceneManager::GetInstance()->ChangeScene("SELECT");
+		isChange = true;
 	}
-
+	if (isChange)
+	{
+		sceneChange.SceneChangeStart("SELECT");
+		sceneChange.Update();
+	}
+	
 	Fornt::GetInstance()->Print(50, 20, 3, "0123456789");
 }
 
@@ -44,7 +51,8 @@ void TitleScene::Draw()
 	Sprite::PreDraw(cmdList);
 	// 背景スプライト描画
 	spriteBG->Draw();
-
+	
+	
 	/// <summary>
 	/// ここに背景スプライトの描画処理を追加できる
 	/// </summary>
@@ -66,7 +74,7 @@ void TitleScene::Draw()
 
 	// 前景スプライト描画前処理
 	Sprite::PreDraw(cmdList);
-
+	sceneChange.Draw();
 	// デバッグテキストの描画
 	DebugText::GetInstance()->DrawAll(cmdList);
 	Fornt::GetInstance()->DrawAll(cmdList);

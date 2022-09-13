@@ -11,6 +11,10 @@ SelectScene::~SelectScene()
 
 void SelectScene::Initialize()
 {
+	// テクスチャ読み込み
+	Sprite::LoadTexture(5, L"Resources/selectScene.png");
+	// 背景スプライト生成
+	spriteBG = Sprite::Create(5, { 0.0f,0.0f });
 }
 
 void SelectScene::Finalize()
@@ -22,11 +26,12 @@ void SelectScene::Update()
 	// ゲームシーンの毎フレーム処理
 
 	Input* input = Input::GetInstance();
-
-	if (input->TriggerKey(DIK_1))
+	
+	if (input->TriggerKey(DIK_1)&& sceneChange.inendflag)
 	{
 		//シーン切り替え
-		SceneManager::GetInstance()->ChangeScene("STAGE_1");
+		//SceneManager::GetInstance()->ChangeScene("STAGE_1");
+		sceneChange.SceneChangeStart("STAGE_1");
 	}
 	if (input->TriggerKey(DIK_2))
 	{
@@ -39,6 +44,7 @@ void SelectScene::Update()
 		SceneManager::GetInstance()->ChangeScene("STAGE_3");
 	}
 	DebugText::GetInstance()->Print(50, 20, 3, "select");
+	sceneChange.Update();
 }
 
 void SelectScene::Draw()
@@ -49,7 +55,7 @@ void SelectScene::Draw()
 	Sprite::PreDraw(cmdList);
 	// 背景スプライト描画
 
-	//sprite->Draw();
+	spriteBG->Draw();
 
 	// スプライト描画後処理
 	Sprite::PostDraw();
@@ -66,6 +72,7 @@ void SelectScene::Draw()
 
 	// デバッグテキストの描画
 	DebugText::GetInstance()->DrawAll(cmdList);
+	sceneChange.Draw();
 	// スプライト描画後処理
 	Sprite::PostDraw();
 #pragma endregion 前景スプライト描画
