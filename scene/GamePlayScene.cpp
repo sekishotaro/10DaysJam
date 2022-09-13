@@ -9,8 +9,8 @@
 
 void GamePlayScene::Initialize()
 {
-	Audio::GetInstance()->LoadWave("futta-dream.wav");
-	Audio::GetInstance()->LoadWave("zaza.wav");
+	//Audio::GetInstance()->LoadWave("futta-dream.wav");
+	//Audio::GetInstance()->LoadWave("zaza.wav");
 
 	// ƒJƒƒ‰¶¬
 	camera = new Camera(WinApp::window_width, WinApp::window_height);
@@ -57,7 +57,9 @@ void GamePlayScene::Initialize()
 	Player::Initialize();
 
 
-	XMFLOAT3 posA = { 0.0f, -65.0f, 0.0f };
+	camera->SetEye({ 0.0f, 0.0f, -60.0f });
+
+	XMFLOAT3 posA = { 0.0f,   -65.0f, 0.0f };
 	XMFLOAT3 posB = { 125.0f, -65.0f, 0.0f };
 
 	XMFLOAT3 posC = { 0.0f, -75.0f, 0.0f };
@@ -65,7 +67,7 @@ void GamePlayScene::Initialize()
 
 	XMFLOAT3 rot = { 0.0f ,0.0f ,0.0f };
 
-	barrel1 = Barrel::Initialize(XMFLOAT3(0.0f, -15.0f, 0.0f), posA, posB, rot, 30.0f);
+	barrel1 = Barrel::Initialize(XMFLOAT3( 60.0f, -55.0f, 0.0f), posA, posB, rot, 30.0f);
 	
 	barrel2 = Barrel::Initialize(XMFLOAT3(0.0f, -25.0f, 0.0f), posC, posD, rot, 30.0f);
 
