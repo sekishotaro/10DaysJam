@@ -62,7 +62,7 @@ protected:
 	DebugText *debugText = nullptr;
 	//text
 	Fornt* fontText = nullptr;
-	static const int fontTextTexnumber = 0;
+	static const int fontTextTexnumber = 50;
 	static const int debugTextTexNumber = 0;
 
 	//シーンファクトリー
