@@ -87,6 +87,7 @@ void GamePlayScene::Finalize()
 
 void GamePlayScene::Update()
 {
+
 	// ゲームシーンの毎フレーム処理
 	Input *input = Input::GetInstance();
 
@@ -107,6 +108,8 @@ void GamePlayScene::Update()
 
 	DebugText::GetInstance()->Print(50, 30 * 1, 2, "%f", barrel1->GetPos().x);
 	DebugText::GetInstance()->Print(50, 30 * 2, 2, "%f", barrel1->GetPos().y);
+	DebugText::GetInstance()->Print(50, 30 * 3, 2, "%f", camera->GetEye().z);
+
 
 	barrel1->CollisionPlayer();
 	barrel2->CollisionPlayer();
