@@ -133,7 +133,9 @@ void GameStage_1::Update()
 	if (itemCount <= 0)
 	{
 		//シーン切り替え
+
 		SceneManager::GetInstance()->ChangeScene("RESULT");
+
 	}
 
 	// 座標の変更を反映
@@ -163,11 +165,14 @@ void GameStage_1::Update()
 		//シーン切り替え
 		SceneManager::GetInstance()->ChangeScene("GAMEOVER");
 
+
 	}
 	//DebugText::GetInstance()->Print(50, 30 * 1, 2, "Stage1");
 	DebugText::GetInstance()->Print(60, 50, 2, "%d", itemCount);
 	Fornt::GetInstance()->Print(1068.0f, 50.0f, 2, "%d", time);
 	sceneChange.Update();
+
+	DebugText::GetInstance()->Print(50, 30 * 1, 2, "Stage1");
 }
 
 void GameStage_1::Draw()
@@ -279,8 +284,8 @@ bool GameStage_1::MapCollide(XMFLOAT3& pos, float radiusX, float radiusY, int ma
 			{
 				mapX = objItem[h][w]->GetPosition().x;
 				mapY = objItem[h][w]->GetPosition().y;
-				mapRadiusX = 2.0f * objItem[h][w]->GetScale().x;
-				mapRadiusY = 2.0f * objItem[h][w]->GetScale().y;
+				mapRadiusX = 2.5f * objItem[h][w]->GetScale().x;
+				mapRadiusY = 2.5f * objItem[h][w]->GetScale().y;
 
 				if (pos.x <= mapX + mapRadiusX && mapX - mapRadiusX <= pos.x)
 				{
