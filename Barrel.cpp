@@ -16,7 +16,7 @@ void Barrel::Move(Input* input)
 void Barrel::StraightMove(const XMFLOAT3& leftPos, const XMFLOAT3& rightPos)
 {
 	//’M‚Ì’†‚É‚¢‚È‚¯‚ê‚Î“®‚©‚È‚¢
-	if (barrelInFlag == false || leftPos.x == rightPos.x)
+	if (barrelInFlag == false || leftPos.x == rightPos.x && leftPos.y == rightPos.y)
 	{
 		return;
 	}
@@ -155,7 +155,10 @@ void Barrel::Update(Input* input)
 	Injection(input);
 
 	Move(input);
+<<<<<<< HEAD
 
+=======
+>>>>>>> kuri
 	collisionTimer--;
 
 	if (barrelInFlag == true && barrelIndividualInFlag == true)
