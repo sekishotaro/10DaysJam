@@ -160,7 +160,7 @@ void Audio::CreateSoundData(SoundData &soundData)
 	assert(SUCCEEDED(result));
 }
 
-void Audio::PlayWave(const std::string &filename, bool LoopFlag)
+void Audio::PlayWave(const std::string& filename, float volume, bool LoopFlag)
 {
 	HRESULT result;
 
@@ -168,7 +168,7 @@ void Audio::PlayWave(const std::string &filename, bool LoopFlag)
 	//未読み込みの検出
 	assert(it != soundDatas_.end());
 	//サウンドデータの参照を取得
-	SoundData &soundData = it->second;
+	SoundData& soundData = it->second;
 
 	if (soundData.playNowFlag == true)
 	{
@@ -189,8 +189,9 @@ void Audio::PlayWave(const std::string &filename, bool LoopFlag)
 
 	//波形データの再生
 	result = soundData.pSourceVoice->SubmitSourceBuffer(&buf);
+	result = soundData.pSourceVoice->SetVolume(volume);
 	result = soundData.pSourceVoice->Start();
-	
+
 	//再生確認フラグの確認
 	if (soundData.playNowFlag == false)
 	{

@@ -2,6 +2,7 @@
 #include "Player.h"
 #include "Collision.h"
 #include "Math.h"
+#include "Audio.h"
 
 bool Barrel::barrelInFlag = false;
 bool Barrel::moveFlag = true;
@@ -75,6 +76,7 @@ void Barrel::Injection(Input* input)
 		barrelIndividualInFlag = false;
 		time = 0.0f;
 		Player::BarrelOut();
+		Audio::GetInstance()->PlayWave("injection.wav", 0.1, false);
 	}
 }
 
@@ -98,6 +100,7 @@ void Barrel::CollisionPlayer()
 		barrelIndividualInFlag = true;
 		Player::GravityForcedEnd();
 		Player::BarrelIn();
+		Audio::GetInstance()->SoundStop("injection.wav");
 	}
 }
 
