@@ -2,6 +2,7 @@
 #include "Player.h"
 #include "Collision.h"
 #include "Math.h"
+#include <DebugText.h>
 
 bool Barrel::barrelInFlag = false;
 bool Barrel::moveFlag = true;
@@ -14,7 +15,7 @@ void Barrel::Move(Input* input)
 void Barrel::StraightMove(const XMFLOAT3& leftPos, const XMFLOAT3& rightPos)
 {
 	//’M‚Ì’†‚É‚¢‚È‚¯‚ê‚Î“®‚©‚È‚¢
-	if (barrelInFlag == false)
+	if (barrelInFlag == false || leftPos.x == rightPos.x)
 	{
 		return;
 	}
@@ -54,8 +55,9 @@ void Barrel::Injection(Input* input)
  		return;
 	}
 
-	if (input->PushKey(DIK_SPACE) && barrelIndividualInFlag == true)
+	if (input->TriggerKey(DIK_SPACE) && barrelIndividualInFlag == true && collisionTimer <= 0)
 	{
+		collisionTimer = 20;
 		//‚Ç‚ê‚¾‚¯”ò‚Î‚·‚©
 		XMFLOAT3 vec1 = { 0.0f, injectionDis, 0.0f};
 
@@ -80,7 +82,7 @@ void Barrel::Injection(Input* input)
 
 void Barrel::CollisionPlayer()
 {
-	if (barrelInFlag == true)
+	if (barrelInFlag == true || collisionTimer >= 0)
 	{
 		return;
 	}
@@ -150,6 +152,9 @@ void Barrel::Update(Input* input)
 	Injection(input);
 
 	Move(input);
+
+	DebugText::GetInstance()->Print(50, 30 * 2, 2, "%d", collisionTimer);
+	collisionTimer--;
 
 	if (barrelInFlag == true && barrelIndividualInFlag == true)
 	{

@@ -1,5 +1,6 @@
 #include "Player.h"
 #include "MyMath.h"
+#include <DebugText.h>
 
 std::unique_ptr<Object3d> Player::objectX;
 Model* Player::model = nullptr;
@@ -16,6 +17,7 @@ const float Player::graAdjustConstant = 20.0f;
 float Player::graValue = 0.0f;
 bool Player::gravityFlag = false;
 float Player::time = 0.0f;
+float Player::accel = 0.0f;
 
 void Player::Initialize(const XMFLOAT3& position)
 {
@@ -23,12 +25,15 @@ void Player::Initialize(const XMFLOAT3& position)
 	model = Model::LoadFromOBJ("sphere");
 
 	objectX = Object3d::Create();
+	pos = position;
+	barrelPos = position;
+	injectionMove = position;
 
 	//オブジェクトにモデルをひも付ける
 	objectX->SetModel(model);
-	objectX->SetPosition(position);
-	pos = position;
+	objectX->SetPosition(pos);
 	objectX->SetScale(scale);
+	objectX->Update();
 }
 
 void Player::Move(Input *input)
@@ -36,15 +41,17 @@ void Player::Move(Input *input)
 	move = { 0.0f,0.0f,0.0f };
 
 	//自機の移動
-	if (input->PushKey(DIK_UP) || input->PushKey(DIK_DOWN) || input->PushKey(DIK_RIGHT) || input->PushKey(DIK_LEFT))
+	if (input->PushKey(DIK_RIGHT) || input->PushKey(DIK_LEFT))
 	{
-		// 現在の座標を取得
-
+		accel += 0.01f;
 		// 移動後の座標を計算
-		//if (input->PushKey(DIK_UP)) { move.y += 1.0f; }
-		//else if (input->PushKey(DIK_DOWN)) { move.y -= 1.0f; }
-		if (input->PushKey(DIK_RIGHT)) { move.x += 0.2f; }
-		else if (input->PushKey(DIK_LEFT)) { move.x -= 0.2f; }
+		if (input->PushKey(DIK_RIGHT)) { move.x += 0.2f + accel; }
+		else if (input->PushKey(DIK_LEFT)) { move.x -= 0.2f + accel; }
+	}
+	// 加速度上限
+	if (accel >= 0.5f)
+	{
+		accel = 0.5f;
 	}
 
 	//自機の位置に移動量を加算
@@ -80,13 +87,13 @@ void Player::Gravity(const bool& graflag)
 
 void Player::InjectionAddMove()
 {
+	//GravityForcedEnd();
 	//もし樽の中に入っているまたは重力がかかっているならかえす
 	if (barrelInFlag == true || gravityFlag == false)
 	{
 		time = 0.0f;
 		return;
 	}
-
 
 	if (time < 1.0f)
 	{
@@ -97,7 +104,8 @@ void Player::InjectionAddMove()
 		gravityFlag = false;
 		return;
 	}
-	
+
+	injectionMove.x += move.x + accel;
 	XMFLOAT3 APos = MyMath::easeOut(barrelPos, injectionMove, time);
 	XMFLOAT3 BPos;
 	
@@ -110,11 +118,12 @@ void Player::InjectionAddMove()
 
 void Player::Update(Input* input)
 {
-	
+ 	DebugText::GetInstance()->Print(50, 30 * 3, 2, "%f", accel);
 	//射出加算
-	InjectionAddMove();
+ 	InjectionAddMove();
 	if (barrelInFlag == true)
 	{
+		accel = 0.0f;
 		//オブジェクトの更新
 		objectX->SetPosition(pos);
 		objectX->Update();
@@ -124,12 +133,15 @@ void Player::Update(Input* input)
 	//重力加算
 	Gravity(gravityFlag);
 	//自機の移動
-	Move(input);
+	if (barrelInFlag == false)
+	{
+		Move(input);
+	}
 
 	//オブジェクトの更新
 	objectX->SetPosition(pos);
 	objectX->Update();
-}
+ }
 
 void Player::Finalize()
 {

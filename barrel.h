@@ -89,6 +89,8 @@ private:
 	XMFLOAT3 rot = { 0.0f, 0.0f, 0.0f };
 	XMFLOAT3 targetPos = { 0,0,0 };
 
+	int collisionTimer;
+
 	float Num = 0;
 	float addNum = 1;
 

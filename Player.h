@@ -116,5 +116,6 @@ private:
 	static float graValue;						//重力増加値
 	static bool gravityFlag;					//重力がかかってるか確認用 : true : かかってない/ false : かかってる
 	static float time;							//射出時の移動に使用
+	static float accel;							//移動量加算
 };	
 

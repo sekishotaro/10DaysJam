@@ -43,6 +43,31 @@ void SelectScene::Update()
 		//シーン切り替え
 		SceneManager::GetInstance()->ChangeScene("STAGE_3");
 	}
+	if (input->TriggerKey(DIK_4))
+	{
+		//シーン切り替え
+		SceneManager::GetInstance()->ChangeScene("STAGE_4");
+	}
+	if (input->TriggerKey(DIK_5))
+	{
+		//シーン切り替え
+		SceneManager::GetInstance()->ChangeScene("STAGE_5");
+	}
+	if (input->TriggerKey(DIK_6))
+	{
+		//シーン切り替え
+		SceneManager::GetInstance()->ChangeScene("STAGE_6");
+	}
+	if (input->TriggerKey(DIK_7))
+	{
+		//シーン切り替え
+		SceneManager::GetInstance()->ChangeScene("STAGE_7");
+	}
+	if (input->TriggerKey(DIK_8))
+	{
+		//シーン切り替え
+		SceneManager::GetInstance()->ChangeScene("STAGE_8");
+	}
 	DebugText::GetInstance()->Print(50, 20, 3, "select");
 	sceneChange.Update();
 }
