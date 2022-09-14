@@ -2,6 +2,7 @@
 #include "Player.h"
 #include "Collision.h"
 #include "Math.h"
+#include <DebugText.h>
 
 bool Barrel::barrelInFlag = false;
 bool Barrel::moveFlag = true;
@@ -54,7 +55,7 @@ void Barrel::Injection(Input* input)
  		return;
 	}
 
-	if (input->TriggerKey(DIK_SPACE) && barrelIndividualInFlag == true)
+	if (input->TriggerKey(DIK_SPACE) && barrelIndividualInFlag == true && collisionTimer <= 0)
 	{
 		collisionTimer = 20;
 		//‚Ç‚ê‚¾‚¯”ò‚Î‚·‚©
@@ -152,6 +153,7 @@ void Barrel::Update(Input* input)
 
 	Move(input);
 
+	DebugText::GetInstance()->Print(50, 30 * 2, 2, "%d", collisionTimer);
 	collisionTimer--;
 
 	if (barrelInFlag == true && barrelIndividualInFlag == true)

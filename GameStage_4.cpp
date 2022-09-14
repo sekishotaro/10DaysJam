@@ -85,7 +85,7 @@ void GameStage_4::Initialize()
 	XMFLOAT3 rot3 = { 0.0f ,180.0f ,180.0f };
 	XMFLOAT3 rot4 = { 0.0f ,180.0f ,270.0f };
 
-	XMFLOAT3 rot5 = { 0.0f ,180.0f ,0.0f };
+	XMFLOAT3 rot5 = { 0.0f ,180.0f ,270.0f };
 
 
 	rotation = { -90, 0, 90 };
@@ -96,7 +96,7 @@ void GameStage_4::Initialize()
 	barrel3 = Barrel::Initialize(XMFLOAT3(b_posX		, 15.0f, 0.0f), pos_range5, pos_range6, rot3, 70.0f);
 	barrel4 = Barrel::Initialize(XMFLOAT3(b_posX + 65.0f, -40.0f, 0.0f), pos_range7, pos_range8, rot4, 70.0f);
 
-	barrel5 = Barrel::Initialize(XMFLOAT3(b_posX		, -40.0f, 0.0f), pos_range1, pos_range2, rot5, 70.0f);
+	barrel5 = Barrel::Initialize(XMFLOAT3(b_posX		, -40.0f, 0.0f), pos_range9, pos_range10, rot5, 70.0f);
 
 	barrelObject1->SetPosition(barrel1->GetPos());
 	barrelObject1->SetScale(XMFLOAT3(4.0f, 4.0f, 4.0f));
