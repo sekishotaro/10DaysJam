@@ -54,8 +54,9 @@ void Barrel::Injection(Input* input)
  		return;
 	}
 
-	if (input->PushKey(DIK_SPACE) && barrelIndividualInFlag == true)
+	if (input->TriggerKey(DIK_SPACE) && barrelIndividualInFlag == true)
 	{
+		collisionTimer = 20;
 		//‚Ç‚ê‚¾‚¯”ò‚Î‚·‚©
 		XMFLOAT3 vec1 = { 0.0f, injectionDis, 0.0f};
 
@@ -80,7 +81,7 @@ void Barrel::Injection(Input* input)
 
 void Barrel::CollisionPlayer()
 {
-	if (barrelInFlag == true)
+	if (barrelInFlag == true || collisionTimer >= 0)
 	{
 		return;
 	}
@@ -150,6 +151,8 @@ void Barrel::Update(Input* input)
 	Injection(input);
 
 	Move(input);
+
+	collisionTimer--;
 
 	if (barrelInFlag == true && barrelIndividualInFlag == true)
 	{
