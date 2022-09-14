@@ -196,7 +196,7 @@ void GameStage_7::Update()
 	{
 		//シーン切り替え
 		Audio::GetInstance()->SoundStop("BGM.wav");
-		SceneManager::GetInstance()->ChangeScene("SELECT");
+		SceneManager::GetInstance()->ChangeScene("RESLUT");
 	}
 
 	// 座標の変更を反映

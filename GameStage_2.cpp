@@ -147,7 +147,7 @@ void GameStage_2::Update()
 	{
 		//シーン切り替え
 		Audio::GetInstance()->SoundStop("BGM.wav");
-		SceneManager::GetInstance()->ChangeScene("SELECT");
+		SceneManager::GetInstance()->ChangeScene("RESLUT");
 		return;
 	}
 	//タイマー
