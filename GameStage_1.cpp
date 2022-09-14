@@ -166,6 +166,7 @@ void GameStage_1::Update()
 	if (time <= 0 || p_pos.y <= -100)
 	{
 		bool gameover = true;
+		Audio::GetInstance()->SoundStop("BGM.wav");
 		//ƒV[ƒ“Ø‚è‘Ö‚¦
 		SceneManager::GetInstance()->ChangeScene("GAMEOVER");
 

@@ -163,13 +163,12 @@ void GameStage_8::Update()
 		timer = 0;
 	}
 	//ゲームオーバー処理
-	if (time <= 0)
+	if (time <= 0 || p_pos.y <= -100)
 	{
 		bool gameover = true;
+		Audio::GetInstance()->SoundStop("BGM.wav");
 		//シーン切り替え
 		SceneManager::GetInstance()->ChangeScene("GAMEOVER");
-
-
 	}
 	Fornt::GetInstance()->Print(60, 35, 1.5, "%d", itemCount);
 	Fornt::GetInstance()->Print(1068.0f, 50.0f, 2, "%d", time);
