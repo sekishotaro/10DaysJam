@@ -158,12 +158,11 @@ void GameStage_2::Update()
 		timer = 0;
 	}
 	//ゲームオーバー処理
-	if (time <= 0)
+	if (time <= 0 || p_pos.y <= -100)
 	{
 		bool gameover = true;
 		//シーン切り替え
 		SceneManager::GetInstance()->ChangeScene("GAMEOVER");
-
 
 	}
 	// 座標の変更を反映

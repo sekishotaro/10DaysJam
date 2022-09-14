@@ -47,6 +47,7 @@ public:
 	/// ゲームシーン用
 	/// </summary>
 	Sprite *spriteBG = nullptr;
+	Sprite* startui = nullptr;
 private:
 	SceneChange sceneChange;
 	bool isChange = false;

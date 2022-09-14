@@ -87,5 +87,6 @@ public:
 	int timer = 0;
 	int time = 60;
 	Barrel* barrel1;
+	
 };
 

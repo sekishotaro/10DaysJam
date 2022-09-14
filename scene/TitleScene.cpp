@@ -13,6 +13,10 @@ void TitleScene::Initialize()
 	Sprite::LoadTexture(20, L"Resources/title.png");
 	// 背景スプライト生成
 	spriteBG = Sprite::Create(20, { 0.0f,0.0f });
+	// テクスチャ読み込み
+	Sprite::LoadTexture(21, L"Resources/START_SPACE_UI.png");
+	//スプライト生成
+	startui = Sprite::Create(21, { 460.0f,500.0f });
 }
 
 void TitleScene::Finalize()
@@ -37,7 +41,7 @@ void TitleScene::Update()
 		sceneChange.Update();
 	}
 	
-	Fornt::GetInstance()->Print(50, 20, 3, "0123456789");
+	//Fornt::GetInstance()->Print(50, 20, 3, "0123456789");
 }
 
 void TitleScene::Draw()
@@ -74,6 +78,7 @@ void TitleScene::Draw()
 
 	// 前景スプライト描画前処理
 	Sprite::PreDraw(cmdList);
+	startui->Draw();
 	sceneChange.Draw();
 	// デバッグテキストの描画
 	DebugText::GetInstance()->DrawAll(cmdList);

@@ -31,7 +31,7 @@ void GameStage_1::Initialize()
 	// テクスチャ読み込み
 	Sprite::LoadTexture(7, L"Resources/timer.png");
 	//スプライト生成
-	timerui = Sprite::Create(7, {980.0f,5.0f });
+	timerui = Sprite::Create(7, { 980.0f,5.0f });
 	//オブジェクト生成
 	BarrelModel = Model::LoadFromOBJ("Cannon");
 	barrelObject1 = Object3d::Create();
@@ -157,18 +157,17 @@ void GameStage_1::Update()
 	barrelObject1->Update();
 	//タイマー
 	timer++;
-	if (timer>=60)
+	if (timer >= 60)
 	{
 		time -= 1;
 		timer = 0;
 	}
 	//ゲームオーバー処理
-	if (time<=0)
+	if (time <= 0 || p_pos.y <= -100)
 	{
 		bool gameover = true;
 		//シーン切り替え
 		SceneManager::GetInstance()->ChangeScene("GAMEOVER");
-
 
 	}
 	Fornt::GetInstance()->Print(60, 35, 1.5, "%d", itemCount);

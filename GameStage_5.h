@@ -6,7 +6,7 @@
 #include "Camera.h"
 #include "Barrel.h"
 #include "Mapchip.h"
-
+#include "SceneChange.h"
 class GameStage_5 : public BaseScene
 {
 private: // エイリアス
@@ -92,5 +92,12 @@ public:
 	Barrel* barrel2;
 	Barrel* barrel3;
 	Barrel* barrel4;
+
+	Sprite* itemui = nullptr;
+	Sprite* timerui = nullptr;
+
+	int timer = 0;
+	int time = 60;
+	SceneChange sceneChange;
 };
 

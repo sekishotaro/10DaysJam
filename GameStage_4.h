@@ -6,6 +6,7 @@
 #include "Camera.h"
 #include "Barrel.h"
 #include "Mapchip.h"
+#include "SceneChange.h"
 
 class GameStage_4 : public BaseScene
 {
@@ -91,5 +92,12 @@ public:
 	Barrel* barrel3;
 	Barrel* barrel4;
 	Barrel* barrel5;
+
+	Sprite* itemui = nullptr;
+	Sprite* timerui = nullptr;
+
+	int timer = 0;
+	int time = 60;
+	SceneChange sceneChange;
 };
 

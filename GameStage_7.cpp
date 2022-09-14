@@ -4,7 +4,7 @@
 #include "DebugText.h"
 #include "DirectXCommon.h"
 #include "Player.h"
-
+#include "Fornt.h"
 void GameStage_7::Initialize()
 {
 	Audio::GetInstance()->LoadWave("BGM.wav");
@@ -20,7 +20,15 @@ void GameStage_7::Initialize()
 	Sprite::LoadTexture(1, L"Resources/BG.png");
 	// 背景スプライト生成
 	spriteBG = Sprite::Create(1, { 0.0f,0.0f });
+	// テクスチャ読み込み
+	Sprite::LoadTexture(6, L"Resources/item_ui.png");
+	//スプライト生成
+	itemui = Sprite::Create(6, { 0.0f,0.0f });
 
+	// テクスチャ読み込み
+	Sprite::LoadTexture(7, L"Resources/timer.png");
+	//スプライト生成
+	timerui = Sprite::Create(7, { 980.0f,5.0f });
 	//オブジェクト生成
 	BarrelModel = Model::LoadFromOBJ("Cannon");
 	barrelObject1 = Object3d::Create();
@@ -235,8 +243,24 @@ void GameStage_7::Update()
 	barrelObject7->SetPosition(barrel7->GetPos());
 	barrelObject7->SetRotation(barrel7->GetRot());
 	barrelObject7->Update();
+	//タイマー
+	timer++;
+	if (timer >= 60)
+	{
+		time -= 1;
+		timer = 0;
+	}
+	//ゲームオーバー処理
+	if (time <= 0 || p_pos.y <= -100)
+	{
+		bool gameover = true;
+		//シーン切り替え
+		SceneManager::GetInstance()->ChangeScene("GAMEOVER");
 
-	DebugText::GetInstance()->Print(50, 30 * 1, 2, "Stage6");
+	}
+	Fornt::GetInstance()->Print(60, 35, 1.5, "%d", itemCount);
+	Fornt::GetInstance()->Print(1068.0f, 50.0f, 2, "%d", time);
+	sceneChange.Update();
 }
 
 void GameStage_7::Draw()
@@ -289,10 +313,12 @@ void GameStage_7::Draw()
 
 	// 前景スプライト描画前処理
 	Sprite::PreDraw(cmdList);
-
+	itemui->Draw();
+	timerui->Draw();
 	// デバッグテキストの描画
 	DebugText::GetInstance()->DrawAll(cmdList);
-
+	Fornt::GetInstance()->DrawAll(cmdList);
+	sceneChange.Draw();
 	// スプライト描画後処理
 	Sprite::PostDraw();
 }

@@ -32,8 +32,14 @@ public: // ÉÅÉìÉoä÷êî
 
 	// ï`âÊ
 	void Draw() override;
+
+	void Savepos();
 private:
 	Sprite* spriteBG = nullptr;
+
+	Sprite* SPACE_UI = nullptr;
+	Sprite* AD_UI = nullptr;
+
 	SceneChange sceneChange;
 
 	std::unique_ptr<Object3d> stage1obj;
@@ -76,5 +82,7 @@ private:
 	float timeRate = 0;
 	bool Rmove = false;
 	bool Lmove = false;
+	XMFLOAT3 getcampos;
+	Camera* camera = nullptr;
 };
 

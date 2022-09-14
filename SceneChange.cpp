@@ -59,7 +59,7 @@ void SceneChange::ease(TYPE type)
 	{
 		return;
 	}
-	
+
 	float start;
 	float end = 0;
 	if (type == FADE_IN)
@@ -79,19 +79,19 @@ void SceneChange::ease(TYPE type)
 	if (type == FADE_IN && timeRate >= endTime)
 	{
 		timeRate = 0;
-		
-		count++;
-		if (count>=80)
-		{
-			inendflag = true;
-			count = 0;
-		}
-		
+		inendflag = true;
 	}
 	else if (type == FADE_OUT && timeRate >= endTime)
 	{
-		timeRate = 0;
-		outendflag = true;
+
+
+		count++;
+		if (count >= 80)
+		{
+			timeRate = 0;
+			outendflag = true;
+			count = 0;
+		}
 	}
 
 	sprite->SetPosition(result);

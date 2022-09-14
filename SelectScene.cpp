@@ -5,7 +5,7 @@
 #include "DebugText.h"
 #include "DirectXCommon.h"
 #include "MyMath.h"
-
+#include "Mapchip.h"
 SelectScene::~SelectScene()
 {
 	Finalize();
@@ -13,20 +13,27 @@ SelectScene::~SelectScene()
 
 void SelectScene::Initialize()
 {
+	// カメラ生成
+	camera = new Camera(WinApp::window_width, WinApp::window_height);
+	// カメラセット
+	Object3d::SetCamera(camera);
+	camera->SetEye({ 0.0f, 0.0f, -60.0f });
 	// テクスチャ読み込み
 	Sprite::LoadTexture(5, L"Resources/selectScene.png");
 	// 背景スプライト生成
 	spriteBG = Sprite::Create(5, { 0.0f,0.0f });
 
-	//オブジェクト生成
-	{//stage1
-		stage1Model = Model::LoadFromOBJ("stage1");
-		stage1obj = Object3d::Create();
+	// テクスチャ読み込み
+	Sprite::LoadTexture(10, L"Resources/AD_UI.png");
+	// スプライト生成
+	AD_UI = Sprite::Create(10, { 460.0f,500.0f });
 
-		//オブジェクトにモデルをひも付ける
-		stage1obj->SetModel(stage1Model);
-		stage1obj->SetScale({ 0.5f, 0.5f, 0.5f });
-	}
+	// テクスチャ読み込み
+	Sprite::LoadTexture(11, L"Resources/SPACE_UI.png");
+	// スプライト生成
+	SPACE_UI = Sprite::Create(11, { 830.0f,560.0f });
+
+
 
 	scale = { 8,8,8 };
 	stage1_pos = { 0,0,0 };
@@ -104,15 +111,36 @@ void SelectScene::Initialize()
 		stage8obj->SetModel(stage8Model);
 		stage8obj->SetScale(scale);
 	}
+	stage1_pos = { 0,0,0 };
+	stage2_pos = { stage1_pos.x - 40,stage1_pos.y,stage1_pos.z };
+	stage3_pos = { stage2_pos.x - 40,stage2_pos.y,stage2_pos.z };
+	stage4_pos = { stage3_pos.x - 40,stage3_pos.y,stage3_pos.z };
+	stage5_pos = { stage4_pos.x - 40,stage4_pos.y,stage4_pos.z };
+	stage6_pos = { stage5_pos.x - 40,stage5_pos.y,stage5_pos.z };
+	stage7_pos = { stage6_pos.x - 40,stage6_pos.y,stage6_pos.z };
+	stage8_pos = { stage7_pos.x - 40,stage7_pos.y,stage7_pos.z };
+
+	stage1obj->SetPosition(stage1_pos);
+	stage2obj->SetPosition(stage2_pos);
+	stage3obj->SetPosition(stage3_pos);
+	stage4obj->SetPosition(stage4_pos);
+
+	stage5obj->SetPosition(stage5_pos);
+	stage6obj->SetPosition(stage6_pos);
+	stage7obj->SetPosition(stage7_pos);
+	stage8obj->SetPosition(stage8_pos);
 }
 
 void SelectScene::Finalize()
 {
+
 }
 
 void SelectScene::Update()
 {
-	// ゲームシーンの毎フレーム処理
+
+	camera->SetEye({ 0,0, +50.0f });
+
 
 	Input* input = Input::GetInstance();
 	if (input->TriggerKey(DIK_A) && count > 0 && !Lmove
@@ -136,57 +164,67 @@ void SelectScene::Update()
 			//シーン切り替え 1
 			//SceneManager::GetInstance()->ChangeScene("STAGE_1");
 			sceneChange.SceneChangeStart("STAGE_1");
+			Savepos();
 		}
 		else if (count == 1 && input->TriggerKey(DIK_SPACE))
 		{
 			//シーン切り替え 2
 			//SceneManager::GetInstance()->ChangeScene("STAGE_2");
 			sceneChange.SceneChangeStart("STAGE_2");
+			Savepos();
 		}
 		else if (count == 2 && input->TriggerKey(DIK_SPACE))
 		{
 			//シーン切り替え 3
 			//SceneManager::GetInstance()->ChangeScene("STAGE_3");
 			sceneChange.SceneChangeStart("STAGE_3");
+			Savepos();
 		}
 		else if (count == 3 && input->TriggerKey(DIK_SPACE))
 		{
 			//シーン切り替え 4
 			//SceneManager::GetInstance()->ChangeScene("STAGE_4");
 			sceneChange.SceneChangeStart("STAGE_4");
+			Savepos();
 		}
 		else if (count == 4 && input->TriggerKey(DIK_SPACE))
 		{
 			//シーン切り替え 5
 			//SceneManager::GetInstance()->ChangeScene("STAGE_5");
 			sceneChange.SceneChangeStart("STAGE_5");
+			Savepos();
 		}
 		else if (count == 5 && input->TriggerKey(DIK_SPACE))
 		{
 			//シーン切り替え 6
 			//SceneManager::GetInstance()->ChangeScene("STAGE_6");
 			sceneChange.SceneChangeStart("STAGE_6");
+			Savepos();
 		}
 		else if (count == 6 && input->TriggerKey(DIK_SPACE))
 		{
 			//シーン切り替え 7
 			//SceneManager::GetInstance()->ChangeScene("STAGE_7");
 			sceneChange.SceneChangeStart("STAGE_7");
+			Savepos();
 		}
 		else if (count == 7 && input->TriggerKey(DIK_SPACE))
 		{
 			//シーン切り替え 8
 			//SceneManager::GetInstance()->ChangeScene("STAGE_8");
 			sceneChange.SceneChangeStart("STAGE_8");
+			Savepos();
 		}
 	}
 
-	//DebugText::GetInstance()->Print(50, 20, 3, "select");
+	DebugText::GetInstance()->Print(50, 20, 3, "%f", stage1_pos.x);
+	DebugText::GetInstance()->Print(50, 50, 3, "%f", stage1_pos.y);
+	DebugText::GetInstance()->Print(50, 80, 3, "%f", stage1_pos.z);
 	if (Rmove)
 	{
 		nowTime += 0.03;
 		timeRate = min(nowTime / endTime, 1);
-		
+
 		float start = savepos.x;
 		float end = savepos.x + 20;
 		float pos;
@@ -216,6 +254,7 @@ void SelectScene::Update()
 		}
 	}
 	{
+		camera->Update();
 		sceneChange.Update();
 		stage1obj->Update();
 		stage2obj->Update();
@@ -275,6 +314,7 @@ void SelectScene::Draw()
 
 	stage5obj->Draw();
 	stage6obj->Draw();
+
 	stage7obj->Draw();
 	stage8obj->Draw();
 	// 3Dオブジェクト描画後処理
@@ -282,11 +322,24 @@ void SelectScene::Draw()
 #pragma region 前景スプライト描画
 	// 前景スプライト描画前処理
 	Sprite::PreDraw(cmdList);
-
+	AD_UI->Draw();
+	SPACE_UI->Draw();
 	// デバッグテキストの描画
-	DebugText::GetInstance()->DrawAll(cmdList);
+	//DebugText::GetInstance()->DrawAll(cmdList);
 	sceneChange.Draw();
 	// スプライト描画後処理
 	Sprite::PostDraw();
 #pragma endregion 前景スプライト描画
+}
+
+void SelectScene::Savepos()
+{
+
+
+	stage1obj->SetPosition({ 0,0,0 });
+	nowTime = 0;
+	endTime = 1;
+	timeRate = 0;
+	Rmove = false;
+	Lmove = false;
 }
