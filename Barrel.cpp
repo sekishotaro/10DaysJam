@@ -14,7 +14,7 @@ void Barrel::Move(Input* input)
 void Barrel::StraightMove(const XMFLOAT3& leftPos, const XMFLOAT3& rightPos)
 {
 	//’M‚Ì’†‚É‚¢‚È‚¯‚ê‚Î“®‚©‚È‚¢
-	if (barrelInFlag == false)
+	if (barrelInFlag == false || leftPos.x == rightPos.x)
 	{
 		return;
 	}

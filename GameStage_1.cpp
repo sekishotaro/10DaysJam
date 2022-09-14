@@ -64,7 +64,7 @@ void GameStage_1::Initialize()
 	XMFLOAT3 rot = { 0.0f ,180.0f ,0.0f };
 
 	// バレル初期化
-	barrel1 = Barrel::Initialize(XMFLOAT3(b_posX, -65.0f, 0.0f), pos_range1, pos_range2, rot, 20.0f);
+	barrel1 = Barrel::Initialize(XMFLOAT3(b_posX, -65.0f, 0.0f), pos_range1, pos_range2, rot, 70.0f);
 
 	barrelObject1->SetPosition(barrel1->GetPos());
 	barrelObject1->SetScale(XMFLOAT3(4.0f, 4.0f, 4.0f));
@@ -123,6 +123,7 @@ void GameStage_1::Update()
 	{
 		//シーン切り替え
 		SceneManager::GetInstance()->ChangeScene("SELECT");
+		return;
 	}
 
 	// 座標の変更を反映
@@ -140,7 +141,6 @@ void GameStage_1::Update()
 	barrelObject1->Update();
 
 	DebugText::GetInstance()->Print(50, 30 * 1, 2, "Stage1");
-	DebugText::GetInstance()->Print(50, 30 * 2, 2, "%d", itemCount);
 }
 
 void GameStage_1::Draw()
@@ -250,8 +250,8 @@ bool GameStage_1::MapCollide(XMFLOAT3& pos, float radiusX, float radiusY, int ma
 			{
 				mapX = objItem[h][w]->GetPosition().x;
 				mapY = objItem[h][w]->GetPosition().y;
-				mapRadiusX = 2.0f * objItem[h][w]->GetScale().x;
-				mapRadiusY = 2.0f * objItem[h][w]->GetScale().y;
+				mapRadiusX = 2.5f * objItem[h][w]->GetScale().x;
+				mapRadiusY = 2.5f * objItem[h][w]->GetScale().y;
 
 				if (pos.x <= mapX + mapRadiusX && mapX - mapRadiusX <= pos.x)
 				{
