@@ -84,6 +84,7 @@ void GameStage_1::Initialize()
 	barrelObject1->SetScale(XMFLOAT3(4.0f, 4.0f, 4.0f));
 	barrelObject1->SetRotation(rot);
 	Audio::GetInstance()->PlayWave("BGM.wav", 0.05, true);
+	time = 60;
 }
 
 void GameStage_1::Finalize()
@@ -166,6 +167,8 @@ void GameStage_1::Update()
 	if (time <= 0 || p_pos.y <= -100)
 	{
 		bool gameover = true;
+		Player::BarrelOut();
+		p_pos = { map_max_x / 2 * LAND_SCALE, -map_max_y / 2 * LAND_SCALE - 25.0f, 0 };
 		Audio::GetInstance()->SoundStop("BGM.wav");
 		//ƒV[ƒ“Ø‚è‘Ö‚¦
 		SceneManager::GetInstance()->ChangeScene("GAMEOVER");

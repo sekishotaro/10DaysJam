@@ -32,7 +32,7 @@ void GamePlayScene::Initialize()
 	barrelObject1->SetScale({ 0.5f, 0.5f, 0.5f });
 
 	// オブジェクト生成
-	item = Model::LoadFromOBJ("block");
+	item = Model::LoadFromOBJ("item");
 
 	//マップチップ用のCSV読み込み
 	//(map, "Resource/scv/なんたら.csv")で追加可能

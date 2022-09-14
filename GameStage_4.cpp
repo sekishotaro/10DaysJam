@@ -52,7 +52,7 @@ void GameStage_4::Initialize()
 	barrelObject5->SetScale({ 0.5f, 0.5f, 0.5f });
 
 	// オブジェクト生成
-	item = Model::LoadFromOBJ("block");
+	item = Model::LoadFromOBJ("item");
 
 	//マップチップ用のCSV読み込み
 	//(map, "Resource/scv/なんたら.csv")で追加可能
@@ -104,12 +104,12 @@ void GameStage_4::Initialize()
 	rotation = { -90, 0, 90 };
 
 	// バレル初期化
-	barrel1 = Barrel::Initialize(XMFLOAT3(b_posX		, -65.0f, 0.0f), pos_range1, pos_range2, rot1, 30.0f);
+	barrel1 = Barrel::Initialize(XMFLOAT3(b_posX, -65.0f, 0.0f), pos_range1, pos_range2, rot1, 30.0f);
 	barrel2 = Barrel::Initialize(XMFLOAT3(b_posX - 65.0f, -40.0f, 0.0f), pos_range3, pos_range4, rot2, 70.0f);
-	barrel3 = Barrel::Initialize(XMFLOAT3(b_posX		, 15.0f, 0.0f), pos_range5, pos_range6, rot3, 70.0f);
+	barrel3 = Barrel::Initialize(XMFLOAT3(b_posX, 15.0f, 0.0f), pos_range5, pos_range6, rot3, 70.0f);
 	barrel4 = Barrel::Initialize(XMFLOAT3(b_posX + 65.0f, -40.0f, 0.0f), pos_range7, pos_range8, rot4, 70.0f);
 
-	barrel5 = Barrel::Initialize(XMFLOAT3(b_posX		, -40.0f, 0.0f), pos_range9, pos_range10, rot5, 70.0f);
+	barrel5 = Barrel::Initialize(XMFLOAT3(b_posX, -40.0f, 0.0f), pos_range9, pos_range10, rot5, 70.0f);
 
 	barrelObject1->SetPosition(barrel1->GetPos());
 	barrelObject1->SetScale(XMFLOAT3(4.0f, 4.0f, 4.0f));
@@ -132,6 +132,7 @@ void GameStage_4::Initialize()
 	// プレイヤー初期化
 	Player::Initialize(p_pos);
 	Audio::GetInstance()->PlayWave("BGM.wav", 0.05, true);
+	time = 60;
 }
 
 void GameStage_4::Finalize()
@@ -232,6 +233,8 @@ void GameStage_4::Update()
 	if (time <= 0 || p_pos.y <= -100)
 	{
 		bool gameover = true;
+		Player::BarrelOut();
+		p_pos = { barrel1->GetPos().x, barrel1->GetPos().y + 18.0f, 0 };
 		Audio::GetInstance()->SoundStop("BGM.wav");
 		//シーン切り替え
 		SceneManager::GetInstance()->ChangeScene("GAMEOVER");

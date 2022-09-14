@@ -48,7 +48,7 @@ void GameStage_6::Initialize()
 	barrelObject4->SetScale({ 0.5f, 0.5f, 0.5f });
 
 	// オブジェクト生成
-	item = Model::LoadFromOBJ("block");
+	item = Model::LoadFromOBJ("item");
 
 	//マップチップ用のCSV読み込み
 	//(map, "Resource/scv/なんたら.csv")で追加可能
@@ -118,6 +118,7 @@ void GameStage_6::Initialize()
 	// プレイヤー初期化
 	Player::Initialize(p_pos);
 	Audio::GetInstance()->PlayWave("BGM.wav", 0.05, true);
+	time = 60;
 }
 
 void GameStage_6::Finalize()
@@ -220,6 +221,8 @@ void GameStage_6::Update()
 	if (time <= 0 || p_pos.y <= -100)
 	{
 		bool gameover = true;
+		Player::BarrelOut();
+		p_pos = { barrel1->GetPos().x, barrel1->GetPos().y + 18.0f, 0 };
 		Audio::GetInstance()->SoundStop("BGM.wav");
 		//シーン切り替え
 		SceneManager::GetInstance()->ChangeScene("GAMEOVER");

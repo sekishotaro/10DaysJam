@@ -92,6 +92,7 @@ void GameStage_2::Initialize()
 	// プレイヤー初期化
 	Player::Initialize(p_pos);
 	Audio::GetInstance()->PlayWave("BGM.wav", 0.05, true);
+	time = 60;
 	
 }
 
@@ -161,6 +162,8 @@ void GameStage_2::Update()
 	if (time <= 0 || p_pos.y <= -100)
 	{
 		bool gameover = true;
+		Player::BarrelOut();
+		p_pos = { barrel1->GetPos().x, barrel1->GetPos().y + 18.0f , 0 };
 		Audio::GetInstance()->SoundStop("BGM.wav");
 		//シーン切り替え
 		SceneManager::GetInstance()->ChangeScene("GAMEOVER");
