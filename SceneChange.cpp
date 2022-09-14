@@ -38,7 +38,7 @@ bool SceneChange::SceneChangeStart(const std::string& sceneName)
 	if (type != FADE_OUT)
 	{
 		outendflag = false;
-		sprite->SetPosition({ 1280,0 });
+		sprite->SetPosition({ -1280,0 });
 		nowTime = 0;
 	}
 
@@ -85,11 +85,11 @@ void SceneChange::ease(TYPE type)
 	{
 
 
+		timeRate = 0;
+		outendflag = true;
 		count++;
 		if (count >= 80)
 		{
-			timeRate = 0;
-			outendflag = true;
 			count = 0;
 		}
 	}

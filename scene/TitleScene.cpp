@@ -37,7 +37,8 @@ void TitleScene::Update()
 	}
 	if (isChange)
 	{
-		sceneChange.SceneChangeStart("SELECT");
+		SceneManager::GetInstance()->ChangeScene("SELECT");
+		//sceneChange.SceneChangeStart("SELECT");
 		sceneChange.Update();
 	}
 	

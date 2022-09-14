@@ -162,57 +162,57 @@ void SelectScene::Update()
 		if (count == 0 && input->TriggerKey(DIK_SPACE))
 		{
 			//シーン切り替え 1
-			//SceneManager::GetInstance()->ChangeScene("STAGE_1");
-			sceneChange.SceneChangeStart("STAGE_1");
+			SceneManager::GetInstance()->ChangeScene("STAGE_1");
+			//sceneChange.SceneChangeStart("STAGE_1");
 			Savepos();
 		}
 		else if (count == 1 && input->TriggerKey(DIK_SPACE))
 		{
 			//シーン切り替え 2
-			//SceneManager::GetInstance()->ChangeScene("STAGE_2");
-			sceneChange.SceneChangeStart("STAGE_2");
+			SceneManager::GetInstance()->ChangeScene("STAGE_2");
+			//sceneChange.SceneChangeStart("STAGE_2");
 			Savepos();
 		}
 		else if (count == 2 && input->TriggerKey(DIK_SPACE))
 		{
 			//シーン切り替え 3
-			//SceneManager::GetInstance()->ChangeScene("STAGE_3");
-			sceneChange.SceneChangeStart("STAGE_3");
+			SceneManager::GetInstance()->ChangeScene("STAGE_3");
+			//sceneChange.SceneChangeStart("STAGE_3");
 			Savepos();
 		}
 		else if (count == 3 && input->TriggerKey(DIK_SPACE))
 		{
 			//シーン切り替え 4
-			//SceneManager::GetInstance()->ChangeScene("STAGE_4");
-			sceneChange.SceneChangeStart("STAGE_4");
+			SceneManager::GetInstance()->ChangeScene("STAGE_4");
+			//sceneChange.SceneChangeStart("STAGE_4");
 			Savepos();
 		}
 		else if (count == 4 && input->TriggerKey(DIK_SPACE))
 		{
 			//シーン切り替え 5
-			//SceneManager::GetInstance()->ChangeScene("STAGE_5");
-			sceneChange.SceneChangeStart("STAGE_5");
+			SceneManager::GetInstance()->ChangeScene("STAGE_5");
+			//sceneChange.SceneChangeStart("STAGE_5");
 			Savepos();
 		}
 		else if (count == 5 && input->TriggerKey(DIK_SPACE))
 		{
 			//シーン切り替え 6
-			//SceneManager::GetInstance()->ChangeScene("STAGE_6");
-			sceneChange.SceneChangeStart("STAGE_6");
+			SceneManager::GetInstance()->ChangeScene("STAGE_6");
+			//sceneChange.SceneChangeStart("STAGE_6");
 			Savepos();
 		}
 		else if (count == 6 && input->TriggerKey(DIK_SPACE))
 		{
 			//シーン切り替え 7
-			//SceneManager::GetInstance()->ChangeScene("STAGE_7");
-			sceneChange.SceneChangeStart("STAGE_7");
+			SceneManager::GetInstance()->ChangeScene("STAGE_7");
+			//sceneChange.SceneChangeStart("STAGE_7");
 			Savepos();
 		}
 		else if (count == 7 && input->TriggerKey(DIK_SPACE))
 		{
 			//シーン切り替え 8
-			//SceneManager::GetInstance()->ChangeScene("STAGE_8");
-			sceneChange.SceneChangeStart("STAGE_8");
+			SceneManager::GetInstance()->ChangeScene("STAGE_8");
+			//sceneChange.SceneChangeStart("STAGE_8");
 			Savepos();
 		}
 	}
