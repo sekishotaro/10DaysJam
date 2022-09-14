@@ -22,7 +22,7 @@ float Player::accel = 0.0f;
 void Player::Initialize(const XMFLOAT3& position)
 {
 	//オブジェクト生成
-	model = Model::LoadFromOBJ("sphere");
+	model = Model::LoadFromOBJ("player");
 
 	objectX = Object3d::Create();
 	pos = position;
@@ -41,12 +41,12 @@ void Player::Move(Input *input)
 	move = { 0.0f,0.0f,0.0f };
 
 	//自機の移動
-	if (input->PushKey(DIK_RIGHT) || input->PushKey(DIK_LEFT))
+	if (input->PushKey(DIK_D) || input->PushKey(DIK_A))
 	{
 		accel += 0.01f;
 		// 移動後の座標を計算
-		if (input->PushKey(DIK_RIGHT)) { move.x += 0.2f + accel; }
-		else if (input->PushKey(DIK_LEFT)) { move.x -= 0.2f + accel; }
+		if (input->PushKey(DIK_D)) { move.x += 0.2f + accel; }
+		else if (input->PushKey(DIK_A)) { move.x -= 0.2f + accel; }
 	}
 	// 加速度上限
 	if (accel >= 0.5f)
