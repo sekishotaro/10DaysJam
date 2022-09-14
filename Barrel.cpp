@@ -155,10 +155,6 @@ void Barrel::Update(Input* input)
 	Injection(input);
 
 	Move(input);
-<<<<<<< HEAD
-
-=======
->>>>>>> kuri
 	collisionTimer--;
 
 	if (barrelInFlag == true && barrelIndividualInFlag == true)
