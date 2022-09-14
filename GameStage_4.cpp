@@ -7,6 +7,9 @@
 
 void GameStage_4::Initialize()
 {
+	Audio::GetInstance()->LoadWave("BGM.wav");
+	Audio::GetInstance()->LoadWave("injection.wav");
+
 	// カメラ生成
 	camera = new Camera(WinApp::window_width, WinApp::window_height);
 
@@ -118,6 +121,7 @@ void GameStage_4::Initialize()
 	p_pos = { barrel1->GetPos().x, barrel1->GetPos().y + 18.0f, 0 };
 	// プレイヤー初期化
 	Player::Initialize(p_pos);
+	Audio::GetInstance()->PlayWave("BGM.wav", 0.05, true);
 }
 
 void GameStage_4::Finalize()
@@ -173,6 +177,7 @@ void GameStage_4::Update()
 	if (itemCount <= 0)
 	{
 		//シーン切り替え
+		Audio::GetInstance()->SoundStop("BGM.wav");
 		SceneManager::GetInstance()->ChangeScene("SELECT");
 	}
 
