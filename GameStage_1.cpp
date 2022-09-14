@@ -9,6 +9,9 @@
 
 void GameStage_1::Initialize()
 {
+	Audio::GetInstance()->LoadWave("BGM.wav");
+	Audio::GetInstance()->LoadWave("injection.wav");
+
 	// ƒJƒƒ‰¶¬
 	camera = new Camera(WinApp::window_width, WinApp::window_height);
 
@@ -80,6 +83,7 @@ void GameStage_1::Initialize()
 	barrelObject1->SetPosition(barrel1->GetPos());
 	barrelObject1->SetScale(XMFLOAT3(4.0f, 4.0f, 4.0f));
 	barrelObject1->SetRotation(rot);
+	Audio::GetInstance()->PlayWave("BGM.wav", 0.05, true);
 }
 
 void GameStage_1::Finalize()
@@ -133,7 +137,7 @@ void GameStage_1::Update()
 	if (itemCount <= 0)
 	{
 		//ƒV[ƒ“Ø‚è‘Ö‚¦
-
+		Audio::GetInstance()->SoundStop("BGM.wav");
 		SceneManager::GetInstance()->ChangeScene("RESULT");
 
 	}

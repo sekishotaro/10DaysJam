@@ -36,12 +36,14 @@ void SelectScene::Update()
 	if (input->TriggerKey(DIK_2))
 	{
 		//シーン切り替え
-		SceneManager::GetInstance()->ChangeScene("STAGE_2");
+		//SceneManager::GetInstance()->ChangeScene("STAGE_2");
+		sceneChange.SceneChangeStart("STAGE_2");
 	}
 	if (input->TriggerKey(DIK_3))
 	{
 		//シーン切り替え
-		SceneManager::GetInstance()->ChangeScene("STAGE_3");
+		//SceneManager::GetInstance()->ChangeScene("STAGE_3");
+		sceneChange.SceneChangeStart("STAGE_3");
 	}
 	if (input->TriggerKey(DIK_4))
 	{

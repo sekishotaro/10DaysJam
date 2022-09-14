@@ -6,6 +6,7 @@
 #include "Camera.h"
 #include "Barrel.h"
 #include "Mapchip.h"
+#include "SceneChange.h"
 
 class GameStage_2 : public BaseScene
 {
@@ -69,8 +70,10 @@ public:
 	/// ゲームシーン用
 	/// </summary>
 	Sprite* spriteBG = nullptr;
+	Sprite* itemui = nullptr;
+	Sprite* timerui = nullptr;
 	Camera* camera = nullptr;
-
+	SceneChange sceneChange;
 	// バレル
 	std::unique_ptr<Object3d> barrelObject1;
 	std::unique_ptr<Object3d> barrelObject2;
@@ -84,5 +87,8 @@ public:
 
 	Barrel* barrel1;
 	Barrel* barrel2;
+
+	int timer = 0;
+	int time = 60;
 };
 
