@@ -14,7 +14,7 @@ SceneChange::SceneChange() :inendflag(false), outendflag(false)
 void SceneChange::Update()
 {
 	if (type == NO) { return; }
-	nowTime += 0.01;
+	nowTime += 0.03;
 	timeRate = min(nowTime / endTime, 1);
 	ease(type);
 
@@ -51,11 +51,11 @@ bool SceneChange::SceneChangeStart(const std::string& sceneName)
 
 void SceneChange::ease(TYPE type)
 {
-	if (type == FADE_OUT & outendflag)
+	if (type == FADE_OUT && outendflag)
 	{
 		return;
 	}
-	if (type == FADE_IN & inendflag)
+	if (type == FADE_IN && inendflag)
 	{
 		return;
 	}
@@ -79,7 +79,14 @@ void SceneChange::ease(TYPE type)
 	if (type == FADE_IN && timeRate >= endTime)
 	{
 		timeRate = 0;
-		inendflag = true;
+		
+		count++;
+		if (count>=80)
+		{
+			inendflag = true;
+			count = 0;
+		}
+		
 	}
 	else if (type == FADE_OUT && timeRate >= endTime)
 	{

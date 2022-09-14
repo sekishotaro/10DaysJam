@@ -7,6 +7,7 @@
 #include "Camera.h"
 #include "Barrel.h"
 #include "Mapchip.h"
+#include "SceneChange.h"
 
 class GameStage_1 : public BaseScene
 {
@@ -69,9 +70,12 @@ public:
 	/// <summary>
 	/// ゲームシーン用
 	/// </summary>
-	Sprite *spriteBG = nullptr;
-	Camera *camera = nullptr;
-
+	Sprite* spriteBG = nullptr;
+	Sprite* itemui = nullptr;
+	Sprite* timerui = nullptr;
+	Camera* camera = nullptr;
+	SceneChange sceneChange;
+	
 	// バレル
 	std::unique_ptr<Object3d> barrelObject1;
 	Model* BarrelModel;
@@ -81,7 +85,8 @@ public:
 	XMFLOAT3 old_p_pos;
 	float p_radius_x;
 	float p_radius_y;
-
+	int timer = 0;
+	int time = 60;
 	Barrel* barrel1;
 };
 

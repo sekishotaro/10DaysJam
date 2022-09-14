@@ -16,6 +16,7 @@
 #include "GameStage_9.h"
 #include "GameStage_10.h"
 
+#include "GameOverScene.h"
 BaseScene *SceneFactory::CreateScene(const std::string &sceneName)
 {
     //Ÿ‚ÌƒV[ƒ“‚ğì¬
@@ -78,6 +79,10 @@ BaseScene *SceneFactory::CreateScene(const std::string &sceneName)
     else if (sceneName == "SELECT")
     {
         newScene = new SelectScene();
+    }
+    else if (sceneName == "GAMEOVER")
+    {
+        newScene = new GameOverScene();
     }
     return newScene;
 }

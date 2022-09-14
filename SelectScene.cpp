@@ -27,7 +27,7 @@ void SelectScene::Update()
 
 	Input* input = Input::GetInstance();
 	
-	if (input->TriggerKey(DIK_1)&& sceneChange.inendflag)
+	if (input->TriggerKey(DIK_1))
 	{
 		//ƒV[ƒ“Ø‚è‘Ö‚¦
 		//SceneManager::GetInstance()->ChangeScene("STAGE_1");

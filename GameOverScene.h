@@ -5,7 +5,7 @@
 #include "Audio.h"
 #include "Camera.h"
 #include "Sprite.h"
-class ResultScene :public BaseScene
+class GameOverScene :public BaseScene
 {
 private:
 	// Microsoft::WRL::を省略
@@ -19,7 +19,7 @@ private:
 
 public: // メンバ関数
 	// デストラクタ
-	~ResultScene();
+	~GameOverScene();
 	// 初期化
 	void Initialize() override;
 	//終了
@@ -31,17 +31,16 @@ public: // メンバ関数
 	void Draw() override;
 
 	void ease();
-
 public:
 
 private: // メンバ変数
 	//スプライト
 	std::unique_ptr<Sprite> sprite;
-	Sprite* GameClearImg = nullptr;
+	Sprite* Gameoverimg = nullptr;
 	Sprite* black = nullptr;
 
 	XMFLOAT2 blackpos = { 0,800 };
-	XMFLOAT2 GameClearPos = { 0,0 };
+	XMFLOAT2 GameoverImgPos = { 0,0 };
 
 	float nowTime = 0;
 	float endTime = 1;

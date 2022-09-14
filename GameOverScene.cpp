@@ -1,17 +1,19 @@
-#include "ResultScene.h"
+#include "GameOverScene.h"
+#include "Input.h"
 #include "SceneManager.h"
 
-ResultScene::~ResultScene()
+GameOverScene::~GameOverScene()
 {
 	Finalize();
 }
 
-void ResultScene::Initialize()
+void GameOverScene::Initialize()
 {
+
 	// テクスチャ読み込み
-	Sprite::LoadTexture(8, L"Resources/stageclear.png");
+	Sprite::LoadTexture(7, L"Resources/gameover.png");
 	// 背景スプライト生成
-	GameClearImg = Sprite::Create(8, { 0.0f,0.0f });
+	Gameoverimg = Sprite::Create(7, { 0.0f,0.0f });
 
 	// テクスチャ読み込み
 	//Sprite::LoadTexture(100, L"Resources/black.png");
@@ -22,11 +24,11 @@ void ResultScene::Initialize()
 	timeRate = 0;
 }
 
-void ResultScene::Finalize()
+void GameOverScene::Finalize()
 {
 }
 
-void ResultScene::Update()
+void GameOverScene::Update()
 {
 	nowTime += 0.03;
 	timeRate = min(nowTime / endTime, 1);
@@ -36,11 +38,11 @@ void ResultScene::Update()
 	if (input->TriggerKey(DIK_SPACE))
 	{
 		nowTime = 0;
-		SceneManager::GetInstance()->ChangeScene("SELECT");
+		SceneManager::GetInstance()->ChangeScene("TITLE");
 	}
 }
 
-void ResultScene::Draw()
+void GameOverScene::Draw()
 {
 	ID3D12GraphicsCommandList* cmdList = DirectXCommon::GetInstance()->GetCmdList();
 #pragma region 背景スプライト描画
@@ -48,7 +50,7 @@ void ResultScene::Draw()
 	Sprite::PreDraw(cmdList);
 	// 背景スプライト描画
 
-	GameClearImg->Draw();
+	Gameoverimg->Draw();
 
 	// スプライト描画後処理
 	Sprite::PostDraw();
@@ -68,12 +70,12 @@ void ResultScene::Draw()
 #pragma endregion 前景スプライト描画
 }
 
-void ResultScene::ease()
+void GameOverScene::ease()
 {
 
-	float start = -800;
+	float start=800;
 	float end = 0;
-
+	
 	float pos;
 
 	pos = (end - start) * ((timeRate * timeRate * timeRate) + 1) + start;

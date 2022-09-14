@@ -41,5 +41,6 @@ private:
 	float nowTime = 0;
 	float endTime = 1;
 	float timeRate = 0;
+	int count=0;
 	Sprite* sprite = nullptr;
 };
