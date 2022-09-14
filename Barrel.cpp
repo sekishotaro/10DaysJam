@@ -156,7 +156,6 @@ void Barrel::Update(Input* input)
 
 	Move(input);
 
-	DebugText::GetInstance()->Print(50, 30 * 2, 2, "%d", collisionTimer);
 	collisionTimer--;
 
 	if (barrelInFlag == true && barrelIndividualInFlag == true)

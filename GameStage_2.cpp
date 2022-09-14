@@ -42,7 +42,7 @@ void GameStage_2::Initialize()
 	barrelObject2->SetScale({ 0.5f, 0.5f, 0.5f });
 
 	// オブジェクト生成
-	item = Model::LoadFromOBJ("block");
+	item = Model::LoadFromOBJ("item");
 
 	//マップチップ用のCSV読み込み
 	//(map, "Resource/scv/なんたら.csv")で追加可能
@@ -183,9 +183,8 @@ void GameStage_2::Update()
 	barrelObject1->Update();
 	barrelObject2->SetPosition(barrel2->GetPos());
 	barrelObject2->Update();
-	DebugText::GetInstance()->Print(60, 50, 2, "%d", itemCount);
+	Fornt::GetInstance()->Print(60, 35, 1.5, "%d", itemCount);
 	Fornt::GetInstance()->Print(1068.0f, 50.0f, 2, "%d", time);
-	//DebugText::GetInstance()->Print(50, 30 * 1, 2, "Stage2");
 	sceneChange.Update();
 }
 

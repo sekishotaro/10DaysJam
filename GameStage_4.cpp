@@ -211,8 +211,6 @@ void GameStage_4::Update()
 	barrelObject5->SetPosition(barrel5->GetPos());
 	barrelObject5->SetRotation(barrel5->GetRot());
 	barrelObject5->Update();
-
-	DebugText::GetInstance()->Print(50, 30 * 1, 2, "Stage4");
 }
 
 void GameStage_4::Draw()

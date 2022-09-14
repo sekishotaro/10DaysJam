@@ -118,7 +118,6 @@ void Player::InjectionAddMove()
 
 void Player::Update(Input* input)
 {
- 	DebugText::GetInstance()->Print(50, 30 * 3, 2, "%f", accel);
 	//Ëo‰ÁZ
  	InjectionAddMove();
 	if (barrelInFlag == true)
