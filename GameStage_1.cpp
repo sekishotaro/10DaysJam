@@ -137,6 +137,7 @@ void GameStage_1::Update()
 	if (itemCount <= 0)
 	{
 		//ƒV[ƒ“Ø‚è‘Ö‚¦
+		Audio::GetInstance()->SoundStop("BGM.wav");
 		SceneManager::GetInstance()->ChangeScene("RESULT");
 	}
 

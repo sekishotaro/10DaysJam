@@ -8,6 +8,10 @@ GameStage_6::~GameStage_6()
 
 void GameStage_6::Initialize()
 {
+
+	Audio::GetInstance()->LoadWave("BGM.wav");
+	Audio::GetInstance()->LoadWave("injection.wav");
+	Audio::GetInstance()->PlayWave("BGM.wav", 0.05, true);
 }
 
 void GameStage_6::Finalize()
@@ -20,6 +24,7 @@ void GameStage_6::Update()
 
 	if (input->TriggerKey(DIK_SPACE))
 	{
+		Audio::GetInstance()->SoundStop("BGM.wav");
 		SceneManager::GetInstance()->ChangeScene("TITLE");
 	}
 }
